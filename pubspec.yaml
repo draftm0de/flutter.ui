@@ -1,0 +1,25 @@
+publish_to: none
+name: draftmode_ui_dialog
+description: Handle Dialogs with autoConfirm.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.8.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+dev_dependencies:     
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  test: ^1.26.2
+
+flutter:
+  generate: true
+  uses-material-design: true

@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "btnConfirmNo": "No",
+  "btnConfirmYes": "Yes",
+  "autoConfirmCountdown": "Automatically confirms in {time}",
+  "@autoConfirmCountdown": {
+    "placeholders": {
+      "time": {}
+    }
+  }
+}
