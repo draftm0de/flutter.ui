@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:draftmode_ui_dialog/dialog.dart';
+import 'package:draftmode_ui_dialog/confirm.dart';
 import 'package:draftmode_ui_dialog/l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';

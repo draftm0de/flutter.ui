@@ -72,7 +72,7 @@ automatically closes when the timer reaches zero.
 ## Testing
 
 Run `flutter test --coverage` to execute the widget tests included with this
-package and verify 100% line coverage for `lib/dialog.dart`.
+package and verify 100% line coverage for `lib/confirm.dart`.
 
 ## Contributing
 
