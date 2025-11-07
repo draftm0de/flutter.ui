@@ -14,7 +14,7 @@ enum DraftModeUIConfirmStyle { confirm, error }
 /// Use the static [show] helper to display it. The widget keeps track of an
 /// optional auto-confirm countdown so the UI can surface the remaining time
 /// and dismiss itself when the timer expires. When custom labels are omitted
-/// the component uses strings from [AppLocalizations].
+/// the component uses strings from [DraftModeUILocalizations].
 class DraftModeUIConfirm extends StatefulWidget {
   final String title;
   final String message;
@@ -46,7 +46,6 @@ class DraftModeUIConfirm extends StatefulWidget {
     DraftModeUIConfirmStyle mode = DraftModeUIConfirmStyle.confirm,
     Duration? autoConfirm,
   }) async {
-
     final bool dismissible = barrierDismissible ?? !isIOS;
 
     if (isIOS) {
@@ -138,7 +137,7 @@ class _DraftModeUIConfirmState extends State<DraftModeUIConfirm> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalizations.of(context);
+    final localization = DraftModeUILocalizations.of(context);
     final String confirmBtn =
         widget.confirmLabel ?? localization?.btnConfirmYes ?? 'Yes';
     final String cancelBtn =
@@ -149,8 +148,8 @@ class _DraftModeUIConfirmState extends State<DraftModeUIConfirm> {
     final hasCountdown = widget.autoConfirm != null && _secondsLeft > 0;
     final countdownValue = secondToMMSS(_secondsLeft);
     final countdownText = hasCountdown
-        ? (localization?.autoConfirmCountdown(countdownValue) ??
-            'Automatically confirms in $countdownValue')
+        ? (localization?.autoConfirmCountdown(time: countdownValue) ??
+              'Automatically confirms in $countdownValue')
         : null;
     final String finalMessage = countdownText == null
         ? widget.message
@@ -191,8 +190,8 @@ class _DraftModeUIConfirmState extends State<DraftModeUIConfirm> {
         m.TextButton(
           style: isError
               ? m.TextButton.styleFrom(
-            foregroundColor: m.Theme.of(context).colorScheme.error,
-          )
+                  foregroundColor: m.Theme.of(context).colorScheme.error,
+                )
               : null,
           onPressed: () => _confirm(true),
           child: m.Text(confirmBtn),

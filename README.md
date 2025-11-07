@@ -12,8 +12,8 @@ sure Flutter's localization packages are enabled:
 
 ```yaml
 dependencies:
-  draftmode_ui_dialog:
-    path: ../ui.dialog
+  draftmode_ui:
+    path: ../ui
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -30,8 +30,8 @@ Run `flutter pub get` after updating the file.
 
 ```dart
 return MaterialApp(
-  localizationsDelegates: AppLocalizations.localizationsDelegates,
-  supportedLocales: AppLocalizations.supportedLocales,
+  localizationsDelegates: DraftModeUILocalizations.localizationsDelegates,
+  supportedLocales: DraftModeUILocalizations.supportedLocales,
   home: const MyHomePage(),
 );
 ```

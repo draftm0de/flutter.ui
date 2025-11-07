@@ -1,5 +1,5 @@
 publish_to: none
-name: draftmode_ui_dialog
+name: draftmode_ui
 description: Handle Dialogs with autoConfirm.
 version: 1.0.0+1
 
