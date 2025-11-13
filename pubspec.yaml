@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: any
+  intl: ^0.20.2
   draftmode_localization:
     path: ../localization
 
@@ -22,3 +22,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+
+repository: https://github.com/draftm0de/flutter.ui
+issue_tracker: https://github.com/draftm0de/flutter.ui/issues
+
