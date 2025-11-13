@@ -1,0 +1,1 @@
+export 'package:draftmode_localization/localizations.dart';
