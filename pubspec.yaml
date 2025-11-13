@@ -11,9 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.20.2
-  draftmode_localization: ^1.0.0
-
-dependency_overrides:
   draftmode_localization:
     path: ../localization
 
