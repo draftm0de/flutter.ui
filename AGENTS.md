@@ -39,6 +39,9 @@ This file captures conventions and guardrails for automated contributors.
   hard requirement. When explicitly asked to regenerate/reduce coverage,
   always produce both the standard `lcov.info` output and the corresponding
   HTML report (e.g. via `genhtml`) so the user can inspect deltas visually.
+- After documentation overhauls (e.g., recreating/renaming guides), rerun
+  `flutter test --coverage` followed by `genhtml coverage/lcov.info --output-directory coverage/html`
+  so fresh artifacts exist for review before handing off the work.
 - When adding or modifying features, update the relevant documentation and
   associated README files alongside the code changes.
 - When renaming or adding small files, regenerate coverage reports so cached

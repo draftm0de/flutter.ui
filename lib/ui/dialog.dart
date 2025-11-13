@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as m;
 
-import 'l10n/app_localizations.dart';
+import 'package:draftmode_localization/localizations.dart';
 
-enum DraftModeUIConfirmStyle { confirm, error }
+enum DraftModeUIDialogStyle { confirm, error }
 
 /// Platform-aware confirmation dialog that falls back to sensible defaults.
 ///
@@ -15,21 +15,21 @@ enum DraftModeUIConfirmStyle { confirm, error }
 /// optional auto-confirm countdown so the UI can surface the remaining time
 /// and dismiss itself when the timer expires. When custom labels are omitted
 /// the component uses strings from [DraftModeUILocalizations].
-class DraftModeUIConfirm extends StatefulWidget {
+class DraftModeUIDialog extends StatefulWidget {
   final String title;
   final String message;
   final String? confirmLabel;
   final String? cancelLabel;
-  final DraftModeUIConfirmStyle mode;
+  final DraftModeUIDialogStyle mode;
   final Duration? autoConfirm;
 
-  const DraftModeUIConfirm({
+  const DraftModeUIDialog({
     super.key,
     required this.title,
     required this.message,
     this.confirmLabel,
     this.cancelLabel,
-    this.mode = DraftModeUIConfirmStyle.confirm,
+    this.mode = DraftModeUIDialogStyle.confirm,
     this.autoConfirm,
   });
 
@@ -43,7 +43,7 @@ class DraftModeUIConfirm extends StatefulWidget {
     String? confirmLabel,
     String? cancelLabel,
     bool? barrierDismissible,
-    DraftModeUIConfirmStyle mode = DraftModeUIConfirmStyle.confirm,
+    DraftModeUIDialogStyle mode = DraftModeUIDialogStyle.confirm,
     Duration? autoConfirm,
   }) async {
     final bool dismissible = barrierDismissible ?? !isIOS;
@@ -52,7 +52,7 @@ class DraftModeUIConfirm extends StatefulWidget {
       return showCupertinoDialog<bool>(
         context: context,
         barrierDismissible: dismissible,
-        builder: (_) => DraftModeUIConfirm(
+        builder: (_) => DraftModeUIDialog(
           title: title,
           message: message,
           confirmLabel: confirmLabel,
@@ -66,7 +66,7 @@ class DraftModeUIConfirm extends StatefulWidget {
     return m.showDialog<bool>(
       context: context,
       barrierDismissible: dismissible,
-      builder: (_) => DraftModeUIConfirm(
+      builder: (_) => DraftModeUIDialog(
         title: title,
         message: message,
         confirmLabel: confirmLabel,
@@ -78,10 +78,10 @@ class DraftModeUIConfirm extends StatefulWidget {
   }
 
   @override
-  State<DraftModeUIConfirm> createState() => _DraftModeUIConfirmState();
+  State<DraftModeUIDialog> createState() => _DraftModeUIDialogState();
 }
 
-class _DraftModeUIConfirmState extends State<DraftModeUIConfirm> {
+class _DraftModeUIDialogState extends State<DraftModeUIDialog> {
   Timer? _timer;
   late int _secondsLeft;
 
@@ -137,18 +137,18 @@ class _DraftModeUIConfirmState extends State<DraftModeUIConfirm> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = DraftModeUILocalizations.of(context);
+    final localization = DraftModeLocalizations.of(context);
     final String confirmBtn =
         widget.confirmLabel ?? localization?.btnConfirmYes ?? 'Yes';
     final String cancelBtn =
         widget.cancelLabel ?? localization?.btnConfirmNo ?? 'No';
-    final bool isError = widget.mode == DraftModeUIConfirmStyle.error;
+    final bool isError = widget.mode == DraftModeUIDialogStyle.error;
     final bool showCancelButton = !isError;
 
     final hasCountdown = widget.autoConfirm != null && _secondsLeft > 0;
     final countdownValue = secondToMMSS(_secondsLeft);
     final countdownText = hasCountdown
-        ? (localization?.autoConfirmCountdown(time: countdownValue) ??
+        ? (localization?.workerAutoConfirmIn(time: countdownValue) ??
               'Automatically confirms in $countdownValue')
         : null;
     final String finalMessage = countdownText == null

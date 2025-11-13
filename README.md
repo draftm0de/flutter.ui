@@ -1,32 +1,32 @@
 # DraftMode UI Dialog
 
-A platform-aware confirmation dialog widget with optional auto-confirm countdown
-and Flutter gen-l10n integration. The component exposes a static `show`
-helper that automatically renders `CupertinoAlertDialog` on iOS and
-`AlertDialog` elsewhere while keeping behavior consistent across platforms.
+A platform-aware confirmation dialog widget with an optional auto-confirm
+countdown. The `DraftModeUIDialog.show` helper renders
+`CupertinoAlertDialog` on iOS and `AlertDialog` elsewhere while keeping the
+behavior consistent across platforms.
 
 ## Installation
 
-Add the package to your `pubspec.yaml` as a path or git dependency and make
-sure Flutter's localization packages are enabled:
+Add the package to your `pubspec.yaml` as a path or git dependency and include
+the shared localization package:
 
 ```yaml
 dependencies:
   draftmode_ui:
     path: ../ui
+  draftmode_localization:
+    path: ../localization
   flutter_localizations:
     sdk: flutter
-  intl: any
 ```
 
 Run `flutter pub get` after updating the file.
 
 ## Localization Setup
 
-1. Ensure `flutter generate` is enabled in your `pubspec.yaml`.
-2. Update `l10n.yaml` if you need to change the arb directory or template file.
-3. Add your localized strings to `lib/l10n/*.arb` and run `flutter gen-l10n`.
-4. In your application root, wire the generated delegates:
+Localization ARB sources now live in the dedicated
+`draftmode_localization` repository/package. The UI package simply consumes
+the generated delegates, so enable them in your host app:
 
 ```dart
 return MaterialApp(
@@ -37,18 +37,19 @@ return MaterialApp(
 ```
 
 The dialog falls back to `Yes`/`No` labels (and English countdown text) if the
-localization context is missing, which makes it safe for integration tests or
-minimal host apps.
+localization context is missing, which keeps integration tests and minimal host
+apps simple. If you need additional locales, add them to the localization
+package and pull the updated dependency.
 
 ## Usage
 
 ```dart
-final confirmed = await DraftModeUIConfirm.show(
+final confirmed = await DraftModeUIDialog.show(
   context: context,
   title: 'Discard changes?',
   message: 'You have unsaved edits.',
   autoConfirm: const Duration(seconds: 5),
-  mode: DraftModeUIConfirmStyle.error,
+  mode: DraftModeUIDialogStyle.error,
 );
 
 if (confirmed == true) {
@@ -56,7 +57,7 @@ if (confirmed == true) {
 }
 ```
 
-Pass `DraftModeUIConfirmStyle.error` to hide the cancel button and show a
+Pass `DraftModeUIDialogStyle.error` to hide the cancel button and show a
 red accent on Material buttons.
 
 ### Auto-confirm Countdown
@@ -72,10 +73,11 @@ automatically closes when the timer reaches zero.
 ## Testing
 
 Run `flutter test --coverage` to execute the widget tests included with this
-package and verify 100% line coverage for `lib/confirm.dart`.
+package and verify 100% line coverage for `lib/ui/dialog.dart`.
 
 ## Contributing
 
-1. Update or add ARB resources when introducing user-facing strings.
-2. Run `flutter gen-l10n` and `flutter test --coverage`.
+1. Update the ARB resources in the `draftmode_localization` package when
+   introducing user-facing strings.
+2. Run `flutter test --coverage`.
 3. Submit PRs with a concise summary of behavior changes and test results.

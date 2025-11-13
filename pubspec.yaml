@@ -1,6 +1,6 @@
-publish_to: none
 name: draftmode_ui
 description: Handle Dialogs with autoConfirm.
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
   intl: any
+  draftmode_localization:
+    path: ../localization
 
 dev_dependencies:     
   flutter_lints: ^6.0.0
@@ -21,5 +21,4 @@ dev_dependencies:
   test: ^1.26.2
 
 flutter:
-  generate: true
   uses-material-design: true

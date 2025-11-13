@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:draftmode_ui/confirm.dart';
-import 'package:draftmode_ui/l10n/app_localizations.dart';
+import 'package:draftmode_ui/ui.dart';
+import 'package:draftmode_localization/localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('DraftModeUIConfirm.show', () {
+  group('DraftModeUIDialog.show', () {
     testWidgets(
       'shows Material dialog with localized labels and returns selection',
       (tester) async {
@@ -19,7 +19,7 @@ void main() {
             _TestApp(
               result: result,
               autoConfirm: null,
-              mode: DraftModeUIConfirmStyle.confirm,
+              mode: DraftModeUIDialogStyle.confirm,
               provideLocalization: true,
             ),
           );
@@ -49,7 +49,7 @@ void main() {
             _TestApp(
               result: result,
               autoConfirm: const Duration(seconds: 2),
-              mode: DraftModeUIConfirmStyle.confirm,
+              mode: DraftModeUIDialogStyle.confirm,
               provideLocalization: true,
             ),
           );
@@ -79,7 +79,7 @@ void main() {
           _TestApp(
             result: result,
             autoConfirm: null,
-            mode: DraftModeUIConfirmStyle.error,
+            mode: DraftModeUIDialogStyle.error,
             provideLocalization: true,
           ),
         );
@@ -107,7 +107,7 @@ void main() {
           _TestApp(
             result: result,
             autoConfirm: null,
-            mode: DraftModeUIConfirmStyle.confirm,
+            mode: DraftModeUIDialogStyle.confirm,
             provideLocalization: true,
           ),
         );
@@ -142,7 +142,7 @@ void main() {
             _TestApp(
               result: result,
               autoConfirm: Duration.zero,
-              mode: DraftModeUIConfirmStyle.confirm,
+              mode: DraftModeUIDialogStyle.confirm,
               provideLocalization: true,
               showImmediately: true,
             ),
@@ -167,7 +167,7 @@ void main() {
             _TestApp(
               result: result,
               autoConfirm: const Duration(seconds: 1),
-              mode: DraftModeUIConfirmStyle.confirm,
+            mode: DraftModeUIDialogStyle.confirm,
               provideLocalization: false,
             ),
           );
@@ -211,7 +211,7 @@ class _TestApp extends StatelessWidget {
 
   final ValueNotifier<bool?> result;
   final Duration? autoConfirm;
-  final DraftModeUIConfirmStyle mode;
+  final DraftModeUIDialogStyle mode;
   final bool provideLocalization;
   final bool showImmediately;
 
@@ -228,10 +228,10 @@ class _TestApp extends StatelessWidget {
 
     return MaterialApp(
       localizationsDelegates: provideLocalization
-          ? DraftModeUILocalizations.localizationsDelegates
+          ? DraftModeLocalizations.localizationsDelegates
           : const <LocalizationsDelegate<dynamic>>[],
       supportedLocales: provideLocalization
-          ? DraftModeUILocalizations.supportedLocales
+          ? DraftModeLocalizations.supportedLocales
           : const <Locale>[Locale('en')],
       home: home,
     );
@@ -248,7 +248,7 @@ class _DialogLauncher extends StatefulWidget {
 
   final ValueNotifier<bool?> result;
   final Duration? autoConfirm;
-  final DraftModeUIConfirmStyle mode;
+  final DraftModeUIDialogStyle mode;
   final bool showImmediately;
 
   @override
@@ -265,7 +265,7 @@ class _DialogLauncherState extends State<_DialogLauncher> {
   }
 
   Future<void> _launchDialog() async {
-    final choice = await DraftModeUIConfirm.show(
+    final choice = await DraftModeUIDialog.show(
       context: context,
       title: 'Confirm',
       message: 'Do the thing?',
