@@ -17,6 +17,9 @@ This file captures conventions and guardrails for automated contributors.
 - Running any `dart format` command is pre-approved; feel free to use more
   granular invocations when useful.
 - Ensure `dart analyze` passes with zero warnings.
+- After `flutter pub get`, run `dart run tool/ensure_draftmode_localizations.dart`
+  so the git-based `draftmode_localization` dependency has its generated files
+  before running analysis or tests.
 - Flutter SDK tooling (e.g. `flutter test`, `flutter analyze`, `flutter format`)
   is pre-approved—run whatever commands are needed to validate changes.
 - Execute the full test suite (`flutter test`) after changes. The pre-commit

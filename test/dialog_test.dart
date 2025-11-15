@@ -167,7 +167,7 @@ void main() {
             _TestApp(
               result: result,
               autoConfirm: const Duration(seconds: 1),
-            mode: DraftModeUIDialogStyle.confirm,
+              mode: DraftModeUIDialogStyle.confirm,
               provideLocalization: false,
             ),
           );

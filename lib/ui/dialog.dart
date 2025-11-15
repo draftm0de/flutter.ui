@@ -149,7 +149,7 @@ class _DraftModeUIDialogState extends State<DraftModeUIDialog> {
     final countdownValue = secondToMMSS(_secondsLeft);
     final countdownText = hasCountdown
         ? (localization?.workerAutoConfirmIn(time: countdownValue) ??
-              'Automatically confirms in $countdownValue')
+            'Automatically confirms in $countdownValue')
         : null;
     final String finalMessage = countdownText == null
         ? widget.message
