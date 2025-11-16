@@ -5,5 +5,5 @@
 /doc/api/
 coverage/html/
 coverage/lcov.info
-lib/l10n
-!/lib/l10n/*.arb
+pubspec.lock
+/lib/l10n/*localizations*

@@ -13,15 +13,23 @@ This file captures conventions and guardrails for automated contributors.
   workflows smooth.
 - Run `dart format --output=write .` only after `dart analyze` and the test
   suites succeed. After formatting, rerun `flutter test` to confirm nothing
-  regressed.
+  regressed, then proceed with coverage generation.
 - Running any `dart format` command is pre-approved; feel free to use more
   granular invocations when useful.
 - Ensure `dart analyze` passes with zero warnings.
+- When updating tests or functionality, review inline API docs, READMEs, and
+  CHANGELOG entries so they reflect the behavior exercised by the suite.
+- After `flutter pub get`, run `dart run tool/ensure_draftmode_localizations.dart`
+  so the git-based `draftmode_localization` dependency has its generated files
+  before running analysis or tests.
 - Flutter SDK tooling (e.g. `flutter test`, `flutter analyze`, `flutter format`)
   is pre-approved—run whatever commands are needed to validate changes.
 - Execute the full test suite (`flutter test`) after changes. The pre-commit
   hook already runs format + tests; confirm it stays executable (`chmod +x
   .git/hooks/pre-commit`).
+- As part of completion, produce both `flutter test --coverage` output and
+  `genhtml coverage/lcov.info --output-directory coverage/html` so reviewers
+  can inspect coverage artifacts.
 - Avoid committing artefacts such as `coverage/` outputs.
 - When preparing commit summaries, respond with commit-ready prose (no file
   paths or line references) so the text can be used verbatim.
@@ -35,10 +43,10 @@ This file captures conventions and guardrails for automated contributors.
 ## Testing Patterns
 - Unit tests are colocated under `test/<module>/`. Prefer targeted files over
   monolithic suites.
-- Strive for 100% code coverage; it is an aspirational target even if not a
-  hard requirement. When explicitly asked to regenerate/reduce coverage,
-  always produce both the standard `lcov.info` output and the corresponding
-  HTML report (e.g. via `genhtml`) so the user can inspect deltas visually.
+- Strive for 100% code coverage; treat it as the default expectation. Always
+  produce both the standard `lcov.info` output and the corresponding HTML
+  report (via `genhtml`) when regenerating coverage so the user can inspect
+  deltas visually.
 - After documentation overhauls (e.g., recreating/renaming guides), rerun
   `flutter test --coverage` followed by `genhtml coverage/lcov.info --output-directory coverage/html`
   so fresh artifacts exist for review before handing off the work.
@@ -46,6 +54,10 @@ This file captures conventions and guardrails for automated contributors.
   associated README files alongside the code changes.
 - When renaming or adding small files, regenerate coverage reports so cached
   artifacts do not point at stale paths before committing.
+- Widget tests that rely on localization must wrap their root widget with a
+  `WidgetsApp` that injects
+  `DraftModeLocalizations.localizationsDelegates`/`supportedLocales` (see the
+  `_wrapWithLocalization` helper in `test/dialog_test.dart`).
 
 ## Naming & Docs
 - Keep inline documentation concise and focused on intent, especially for

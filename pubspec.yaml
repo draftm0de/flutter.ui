@@ -4,15 +4,16 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.8.0 <4.0.0'
-  flutter: ">=3.10.0"
+  sdk: '>=3.3.0 <4.0.0'
+  flutter: "3.35.0"
 
 dependencies:
   flutter:
     sdk: flutter
   intl: ^0.20.2
   draftmode_localization:
-    path: ../localization
+    git: https://github.com/draftm0de/flutter.localization
+    version: ^1.0.0
 
 dev_dependencies:     
   flutter_lints: ^6.0.0
@@ -25,4 +26,3 @@ flutter:
 
 repository: https://github.com/draftm0de/flutter.ui
 issue_tracker: https://github.com/draftm0de/flutter.ui/issues
-

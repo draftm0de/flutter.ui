@@ -14,7 +14,7 @@ enum DraftModeUIDialogStyle { confirm, error }
 /// Use the static [show] helper to display it. The widget keeps track of an
 /// optional auto-confirm countdown so the UI can surface the remaining time
 /// and dismiss itself when the timer expires. When custom labels are omitted
-/// the component uses strings from [DraftModeUILocalizations].
+/// the component uses strings from [DraftModeLocalizations].
 class DraftModeUIDialog extends StatefulWidget {
   final String title;
   final String message;
@@ -149,7 +149,7 @@ class _DraftModeUIDialogState extends State<DraftModeUIDialog> {
     final countdownValue = secondToMMSS(_secondsLeft);
     final countdownText = hasCountdown
         ? (localization?.workerAutoConfirmIn(time: countdownValue) ??
-              'Automatically confirms in $countdownValue')
+            'Automatically confirms in $countdownValue')
         : null;
     final String finalMessage = countdownText == null
         ? widget.message
