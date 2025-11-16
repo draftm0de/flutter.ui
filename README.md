@@ -25,13 +25,14 @@ Run `flutter pub get` after updating the file.
 ## Localization Setup
 
 Localization ARB sources now live in the dedicated
-`draftmode_localization` repository/package. The UI package simply consumes
-the generated delegates, so enable them in your host app:
+`draftmode_localization` repository/package. Import
+`package:draftmode_localization/localizations.dart` and enable the generated
+delegates in your host app:
 
 ```dart
 return MaterialApp(
-  localizationsDelegates: DraftModeUILocalizations.localizationsDelegates,
-  supportedLocales: DraftModeUILocalizations.supportedLocales,
+  localizationsDelegates: DraftModeLocalizations.localizationsDelegates,
+  supportedLocales: DraftModeLocalizations.supportedLocales,
   home: const MyHomePage(),
 );
 ```

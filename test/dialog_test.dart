@@ -16,11 +16,14 @@ void main() {
           final result = ValueNotifier<bool?>(null);
 
           await tester.pumpWidget(
-            _TestApp(
-              result: result,
-              autoConfirm: null,
-              mode: DraftModeUIDialogStyle.confirm,
+            _wrapWithLocalization(
               provideLocalization: true,
+              child: _TestApp(
+                result: result,
+                autoConfirm: null,
+                mode: DraftModeUIDialogStyle.confirm,
+                provideLocalization: true,
+              ),
             ),
           );
 
@@ -46,11 +49,14 @@ void main() {
           final result = ValueNotifier<bool?>(null);
 
           await tester.pumpWidget(
-            _TestApp(
-              result: result,
-              autoConfirm: const Duration(seconds: 2),
-              mode: DraftModeUIDialogStyle.confirm,
+            _wrapWithLocalization(
               provideLocalization: true,
+              child: _TestApp(
+                result: result,
+                autoConfirm: const Duration(seconds: 2),
+                mode: DraftModeUIDialogStyle.confirm,
+                provideLocalization: true,
+              ),
             ),
           );
 
@@ -76,11 +82,14 @@ void main() {
         final result = ValueNotifier<bool?>(null);
 
         await tester.pumpWidget(
-          _TestApp(
-            result: result,
-            autoConfirm: null,
-            mode: DraftModeUIDialogStyle.error,
+          _wrapWithLocalization(
             provideLocalization: true,
+            child: _TestApp(
+              result: result,
+              autoConfirm: null,
+              mode: DraftModeUIDialogStyle.error,
+              provideLocalization: true,
+            ),
           ),
         );
 
@@ -104,11 +113,14 @@ void main() {
         final result = ValueNotifier<bool?>(null);
 
         await tester.pumpWidget(
-          _TestApp(
-            result: result,
-            autoConfirm: null,
-            mode: DraftModeUIDialogStyle.confirm,
+          _wrapWithLocalization(
             provideLocalization: true,
+            child: _TestApp(
+              result: result,
+              autoConfirm: null,
+              mode: DraftModeUIDialogStyle.confirm,
+              provideLocalization: true,
+            ),
           ),
         );
 
@@ -139,12 +151,15 @@ void main() {
           final result = ValueNotifier<bool?>(null);
 
           await tester.pumpWidget(
-            _TestApp(
-              result: result,
-              autoConfirm: Duration.zero,
-              mode: DraftModeUIDialogStyle.confirm,
+            _wrapWithLocalization(
               provideLocalization: true,
-              showImmediately: true,
+              child: _TestApp(
+                result: result,
+                autoConfirm: Duration.zero,
+                mode: DraftModeUIDialogStyle.confirm,
+                provideLocalization: true,
+                showImmediately: true,
+              ),
             ),
           );
 
@@ -164,11 +179,14 @@ void main() {
           final result = ValueNotifier<bool?>(null);
 
           await tester.pumpWidget(
-            _TestApp(
-              result: result,
-              autoConfirm: const Duration(seconds: 1),
-              mode: DraftModeUIDialogStyle.confirm,
+            _wrapWithLocalization(
               provideLocalization: false,
+              child: _TestApp(
+                result: result,
+                autoConfirm: const Duration(seconds: 1),
+                mode: DraftModeUIDialogStyle.confirm,
+                provideLocalization: false,
+              ),
             ),
           );
 
@@ -198,6 +216,26 @@ Future<void> _withTargetPlatform(
   } finally {
     debugDefaultTargetPlatformOverride = previous;
   }
+}
+
+Widget _wrapWithLocalization({
+  required Widget child,
+  required bool provideLocalization,
+}) {
+  final delegates = provideLocalization
+      ? DraftModeLocalizations.localizationsDelegates
+      : const <LocalizationsDelegate<dynamic>>[];
+  final locales = provideLocalization
+      ? DraftModeLocalizations.supportedLocales
+      : const <Locale>[Locale('en')];
+
+  return WidgetsApp(
+    color: const Color(0xFF000000),
+    localizationsDelegates: delegates,
+    supportedLocales: locales,
+    locale: const Locale('en'),
+    builder: (context, _) => child,
+  );
 }
 
 class _TestApp extends StatelessWidget {
