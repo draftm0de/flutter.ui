@@ -1,3 +1,4 @@
+import 'package:draftmode_ui/pages/page.dart';
 import 'package:flutter/cupertino.dart';
 
 class DraftModeUIPageExample extends StatelessWidget {
@@ -12,24 +13,20 @@ class DraftModeUIPageExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text(title)),
-      child: SafeArea(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const _HeaderCard(),
-                const SizedBox(height: 50),
-                ...children,
-              ],
-            ),
-          ),
-        ),
-      ),
+    return DraftModeUIPage(
+      containerBackgroundColor: CupertinoColors.white,
+      navigationTitle: title,
+      horizontalContainerPadding: 0,
+      verticalContainerPadding: 0,
+      topLeading: null,
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const _HeaderCard(),
+          const SizedBox(height: 40),
+          ...children,
+        ],
+      )
     );
   }
 }
@@ -52,20 +49,20 @@ class _HeaderCard extends StatelessWidget {
           Image.asset(
             'assets/images/logo.png',
             package: 'draftmode_ui',
-            height: 80,
+            height: 70,
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 10),
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'DraftMode',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 4),
                 Text(
-                  'Development is infinite.',
+                  'Development is infinite\n...like your mind',
                   style: TextStyle(fontSize: 16),
                 ),
               ],
