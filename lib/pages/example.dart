@@ -14,20 +14,19 @@ class DraftModeUIPageExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraftModeUIPage(
-      containerBackgroundColor: CupertinoColors.white,
-      navigationTitle: title,
-      horizontalContainerPadding: 0,
-      verticalContainerPadding: 0,
-      topLeading: null,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const _HeaderCard(),
-          const SizedBox(height: 40),
-          ...children,
-        ],
-      )
-    );
+        containerBackgroundColor: CupertinoColors.white,
+        navigationTitle: title,
+        horizontalContainerPadding: 0,
+        verticalContainerPadding: 0,
+        topLeading: null,
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const _HeaderCard(),
+            const SizedBox(height: 40),
+            ...children,
+          ],
+        ));
   }
 }
 
