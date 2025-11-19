@@ -48,3 +48,34 @@ class DraftModeUIStyleColor {
         text: CupertinoColors.secondaryLabel,
       );
 }
+
+/// Canonical text styles used across DraftMode UI widgets.
+class DraftModeUIStyleText {
+  static TextStyle get primary => TextStyle(
+        color: DraftModeUIStyleColor.primary.text,
+        fontSize: DraftModeUIStyleFontSize.primary,
+      );
+  static TextStyle get tertiary => TextStyle(
+        color: DraftModeUIStyleColor.primary.text,
+        fontSize: DraftModeUIStyleFontSize.tertiary,
+      );
+}
+
+/// Icon sizing tokens to keep glyph sizes consistent.
+class DraftModeUIStyleIconSize {
+  static double get large => 22;
+  static double get medium => 18;
+  static double get small => 16;
+}
+
+/// Font sizing tokens for the shared text styles.
+class DraftModeUIStyleFontSize {
+  static double get primary => 17;
+  static double get secondary => 15;
+  static double get tertiary => 12;
+}
+
+/// Miscellaneous UI style helpers that do not fit other buckets.
+class DraftModeUIStyles {
+  static double labelWidth = 100;
+}

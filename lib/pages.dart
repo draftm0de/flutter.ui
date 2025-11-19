@@ -1,5 +1,3 @@
-library draftmode_ui_page;
-
 export 'pages/example.dart';
 export 'pages/page.dart';
 export 'pages/navigation/item.dart';

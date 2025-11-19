@@ -1,12 +1,14 @@
 # DraftMode UI Components
 
 Reusable Flutter widgets shared across DraftMode apps. The package currently
-ships the platform-aware `DraftModeUIDialog`, the page scaffolding family, and
-a `DraftModeUIPageExample` demo scaffold that showcases the bundled assets.
+ships the platform-aware `DraftModeUIDialog`, grouped form building blocks,
+the page scaffolding family, and a `DraftModeUIPageExample` demo scaffold that
+showcases the bundled assets.
 
 ### Library entrypoints
 
-- `package:draftmode_ui/components.dart` – dialog helpers.
+- `package:draftmode_ui/components.dart` – dialog helpers plus shared form rows
+  and sections.
 - `package:draftmode_ui/pages.dart` – page scaffolds, navigation bars and
   navigation item widgets.
 - `package:draftmode_ui/buttons.dart` – platform-aware icon tokens via `DraftModeUIButton`.
@@ -86,6 +88,52 @@ automatically closes when the timer reaches zero.
   frame.
 - Positive durations schedule one-second ticks using `Timer.periodic`.
 
+## DraftModeUIRow
+
+`DraftModeUIRow` standardizes the grouped form-row layout used throughout
+DraftMode surfaces. When a `label` is provided the widget renders a
+`DraftModeUIStyles.labelWidth`-wide leading column (or the width inherited from
+`DraftModeUISection`) with `DraftModeUIStyleText` typography before expanding
+the trailing child. Padding defaults to the shared `DraftModeUIStylePadding`
+tokens so adjacent rows visually align with the rest of the library.
+
+```dart
+import 'package:draftmode_ui/components.dart';
+
+DraftModeUIRow(
+  CupertinoTextField(placeholder: 'Email'),
+  label: 'Email',
+  backgroundColor: CupertinoColors.secondarySystemGroupedBackground,
+);
+```
+
+Override `padding`, `alignment`, `height`, or `backgroundColor` to match custom
+grouped list treatments. Use `DraftModeUIStyles.labelWidth` for global tuning
+or the new `DraftModeUISection.labelWidth` parameter for per-section overrides.
+
+## DraftModeUISection
+
+`DraftModeUISection` groups one or more rows into a platform-adaptive container
+that mirrors native grouped lists. On iOS it proxies to
+`CupertinoListSection.insetGrouped`; elsewhere, it renders a rounded `Card`
+with optional headers. Sections propagate their `labelWidth` to descendant
+`DraftModeUIRow` instances via `DraftModeUISectionScope`, making it easy to
+align multiple sections with different layouts on the same screen.
+
+```dart
+DraftModeUISection(
+  header: 'Contact details',
+  labelWidth: 120,
+  children: const [
+    DraftModeUIRow(Text('support@draftmode.com'), label: 'Email'),
+    DraftModeUIRow(Text('+1 (415) 555-1234'), label: 'Phone'),
+  ],
+);
+```
+
+Set `transparent: true` to reuse grouped spacing without painting the default
+Cupertino background.
+
 ## DraftModeUIPage
 
 `DraftModeUIPage` encapsulates shared scaffolding conventions for DraftMode
@@ -140,6 +188,21 @@ return const DraftModeUIPageExample(
 
 The header renders `assets/images/logo.png` bundled with this package.
 
+## Example App
+
+The `/example` directory embeds a runnable Flutter app that wires
+`DraftModeUIPage`, `DraftModeUISection`, and `DraftModeUIRow` together. Use it
+as a quick-start template or a visual reference when composing complex forms:
+
+```
+cd example
+flutter run
+```
+
+`main.dart` demonstrates the `DraftModeUIStyles.labelWidth` override while the
+home screen showcases labelled and unlabelled rows rendered inside multiple
+sections.
+
 ## Navigation helpers
 
 `DraftModePageNavigationItem` is a shared button component used by the top and
@@ -155,9 +218,12 @@ respective bars so you only need to provide icons/text.
   (back, save, logout, etc.) so downstream widgets stay idiomatic.
 - `DraftModeUIPlatform.isIOS` mirrors Flutter's `defaultTargetPlatform` to keep
   conditional code consistent across widgets.
-- `DraftModeUIStylePadding`, `DraftModeUIStyleNavigationBar`, and
-  `DraftModeUIStyleColor` centralize spacing, sizing, and colour tokens that you
-  can reuse across custom DraftMode widgets.
+- `DraftModeUIStylePadding`, `DraftModeUIStyleNavigationBar`,
+  `DraftModeUIStyleColor`, `DraftModeUIStyleText`, and
+  `DraftModeUIStyleIconSize` centralize spacing, typography, sizing, and colour
+  tokens that you can reuse across custom DraftMode widgets. Use
+  `DraftModeUIStyles.labelWidth` when composing labelled rows so they align with
+  the stock components.
 
 ## Assets
 

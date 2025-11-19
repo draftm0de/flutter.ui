@@ -33,4 +33,24 @@ void main() {
     expect(tertiary.background, CupertinoColors.systemGroupedBackground);
     expect(tertiary.text, CupertinoColors.secondaryLabel);
   });
+
+  test('DraftModeUIStyleText composes typography tokens', () {
+    final primary = DraftModeUIStyleText.primary;
+    final tertiary = DraftModeUIStyleText.tertiary;
+
+    expect(primary.color, DraftModeUIStyleColor.primary.text);
+    expect(primary.fontSize, DraftModeUIStyleFontSize.primary);
+    expect(tertiary.fontSize, DraftModeUIStyleFontSize.tertiary);
+  });
+
+  test('DraftModeUIStyleIconSize + font sizes remain consistent', () {
+    expect(DraftModeUIStyleIconSize.large, 22);
+    expect(DraftModeUIStyleIconSize.medium, 18);
+    expect(DraftModeUIStyleIconSize.small, 16);
+    expect(DraftModeUIStyleFontSize.secondary, 15);
+  });
+
+  test('DraftModeUIStyles exposes row label width token', () {
+    expect(DraftModeUIStyles.labelWidth, 100);
+  });
 }
