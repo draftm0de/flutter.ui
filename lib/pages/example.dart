@@ -1,4 +1,5 @@
 import 'package:draftmode_ui/pages/page.dart';
+import 'package:draftmode_ui/styles.dart';
 import 'package:flutter/cupertino.dart';
 
 class DraftModeUIPageExample extends StatelessWidget {
@@ -14,7 +15,6 @@ class DraftModeUIPageExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DraftModeUIPage(
-        containerBackgroundColor: CupertinoColors.white,
         navigationTitle: title,
         horizontalContainerPadding: 0,
         verticalContainerPadding: 0,
@@ -23,7 +23,7 @@ class DraftModeUIPageExample extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const _HeaderCard(),
-            const SizedBox(height: 40),
+            SizedBox(height: DraftModeUIStylePadding.tertiary),
             ...children,
           ],
         ));
@@ -36,8 +36,8 @@ class _HeaderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.symmetric(horizontal: DraftModeUIStylePadding.primary),
+      padding: EdgeInsets.all(DraftModeUIStylePadding.primary),
       decoration: BoxDecoration(
         border: Border.all(color: CupertinoColors.systemGrey, width: 0.8),
         borderRadius: BorderRadius.circular(14),
@@ -50,19 +50,19 @@ class _HeaderCard extends StatelessWidget {
             package: 'draftmode_ui',
             height: 70,
           ),
-          const SizedBox(width: 10),
-          const Expanded(
+          SizedBox(width: DraftModeUIStylePadding.primary),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'DraftMode',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: DraftModeUIStyleFontSize.xLarge, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 4),
                 Text(
                   'Development is infinite\n...like your mind',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: DraftModeUIStyleFontSize.secondary),
                 ),
               ],
             ),

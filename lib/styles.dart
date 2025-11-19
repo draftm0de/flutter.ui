@@ -73,6 +73,7 @@ class DraftModeUIStyleFontSize {
   static double get primary => 17;
   static double get secondary => 15;
   static double get tertiary => 12;
+  static double get xLarge => 20;
 }
 
 /// Miscellaneous UI style helpers that do not fit other buckets.

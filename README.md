@@ -1,9 +1,10 @@
 # DraftMode UI Components
 
 Reusable Flutter widgets shared across DraftMode apps. The package currently
-ships the platform-aware `DraftModeUIDialog`, grouped form building blocks,
-the page scaffolding family, and a `DraftModeUIPageExample` demo scaffold that
-showcases the bundled assets.
+ships the platform-aware `DraftModeUIDialog`, grouped form building blocks
+(`DraftModeUIRow`, `DraftModeUISection`, and `DraftModeUIList`), the page
+scaffolding family, and a `DraftModeUIPageExample` demo scaffold that showcases
+the bundled assets.
 
 ### Library entrypoints
 
@@ -133,6 +134,36 @@ DraftModeUISection(
 
 Set `transparent: true` to reuse grouped spacing without painting the default
 Cupertino background.
+
+## DraftModeUIList
+
+`DraftModeUIList` renders tappable grouped lists that reuse the shared row
+layout plus selection badges. Feed it strongly typed domain objects or the
+convenience `DraftModeListItem` class, provide an `itemBuilder`, and optionally
+wire up pull-to-refresh or placeholder states:
+
+```dart
+final items = DraftModeListItemBuilder.fromMap({
+  1: 'Personal',
+  2: 'Work',
+});
+
+DraftModeUIList<DraftModeListItem>(
+  items: items,
+  selectedItem: items.first,
+  header: const DraftModeUIRow(Text('Destination')),
+  emptyPlaceholder: const Text('No matches'),
+  onRefresh: () async => _reload(),
+  itemBuilder: (item, isSelected) => Text(item.value),
+  onTap: (item) => _select(item),
+);
+```
+
+When `selectedItem` matches an element by identity a trailing checkmark is
+rendered automatically. Supplying `onRefresh` switches to a
+`CustomScrollView`/`CupertinoSliverRefreshControl` pair without additional
+plumbing, and `emptyPlaceholder` gets wrapped in a `DraftModeUIRow` so empty
+states still align with the rest of the grouped UI.
 
 ## DraftModeUIPage
 

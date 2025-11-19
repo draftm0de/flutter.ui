@@ -7,9 +7,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget groupedRows = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+    final Map<int, String> map = {1: "Hallo", 2: "Welt", 4: "Example"};
+    final items = DraftModeListItemBuilder.fromMap(map);
+    final selectedItem = DraftModeListItem(id: 3, value: "UIList");
+    items.add(selectedItem);
+
+    final List<Widget> children = [
         DraftModeUISection(
           header: 'Basics',
           children: [
@@ -32,15 +35,23 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-      ],
-    );
+        DraftModeUISection(header: 'Custom label width', children: [
+          DraftModeUIList(
+            items: items,
+            selectedItem: selectedItem,
+            itemBuilder: (item, isSelected) {
+              return Text(item.value);
+            },
+            onTap: (item) {
+              debugPrint("pressedOnTab#${item.id}");
+            },
+          )
+        ]),
+      ];
 
-    return DraftModeUIPage(
-      navigationTitle: 'DraftMode UI',
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: groupedRows,
-      ),
+    return DraftModeUIPageExample(
+      title: 'DraftMode UI',
+      children: children
     );
   }
 }
