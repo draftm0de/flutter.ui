@@ -24,28 +24,23 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
   final ScrollController? controller;
   final bool? primary;
 
-  const DraftModeUIList({
-    super.key,
-    this.isPending = false,
-
-    required this.items,
-    //required this.renderItem,
-    this.selectedItem,
-    this.onTap,
-    this.onSelected,
-
-    this.emptyPlaceholder,
-    this.header,
-    this.separator,
-
-    this.onRefresh,
-    this.padding,
-
-    this.shrinkWrap = true,
-    this.physics,
-    this.controller,
-    this.primary
-  });
+  const DraftModeUIList(
+      {super.key,
+      this.isPending = false,
+      required this.items,
+      //required this.renderItem,
+      this.selectedItem,
+      this.onTap,
+      this.onSelected,
+      this.emptyPlaceholder,
+      this.header,
+      this.separator,
+      this.onRefresh,
+      this.padding,
+      this.shrinkWrap = true,
+      this.physics,
+      this.controller,
+      this.primary});
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +51,7 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
           ? const SizedBox.shrink()
           : DraftModeUIRow(emptyPlaceholder!);
       content = _maybeWrapPlaceholder(context, placeholder);
-    }
-    else {
+    } else {
       final resolvedPadding = padding ?? _resolvedPadding(context);
       final resolvedPhysics = _resolvePhysics();
       if (separator != null) {
@@ -67,7 +61,8 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
           shrinkWrap: shrinkWrap,
           physics: resolvedPhysics,
           padding: resolvedPadding,
-          itemBuilder: (context, index) => _buildListItem(context, items[index]),
+          itemBuilder: (context, index) =>
+              _buildListItem(context, items[index]),
           separatorBuilder: (context, index) => separator!,
           itemCount: items.length,
         );
@@ -88,7 +83,8 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
           physics: resolvedPhysics,
           padding: resolvedPadding,
           itemCount: items.length,
-          itemBuilder: (context, index) => _buildListItem(context, items[index]),
+          itemBuilder: (context, index) =>
+              _buildListItem(context, items[index]),
         );
         /*
         final Widget list = (onRefresh != null)
@@ -133,7 +129,8 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
     }
 
     final resolvedPadding = padding ?? _resolvedPadding(context);
-    final resolvePhysics = _resolvePhysics() ?? const AlwaysScrollableScrollPhysics();
+    final resolvePhysics =
+        _resolvePhysics() ?? const AlwaysScrollableScrollPhysics();
     final list = ListView(
       controller: controller,
       primary: primary,
