@@ -4,9 +4,7 @@ on:
   push:
     branches: [main]
 
-permissions:
-  contents: write  # allow downstream workflow to push tags
-
 jobs:
-  version-auto-tag:
-    uses: draftm0de/flutter/.github/workflows/release.yml@main
+  draftmode-flutter-release:
+    uses: draftm0de/github.workflows/.github/workflows/flutter-release.yml@main
+    secrets: inherit

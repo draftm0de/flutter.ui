@@ -5,5 +5,6 @@ on:
     branches: [main]
 
 jobs:
-  ci:
-    uses: draftm0de/flutter/.github/workflows/ci.yml@main
+  draftmode-flutter-ci:
+    uses: draftm0de/github.workflows/.github/workflows/flutter-ci.yml@main
+    secrets: inherit
