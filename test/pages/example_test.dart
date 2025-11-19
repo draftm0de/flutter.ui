@@ -63,7 +63,10 @@ void main() {
       final scaffoldFinder = find.byType(CupertinoPageScaffold);
       expect(scaffoldFinder, findsOneWidget);
       final CupertinoPageScaffold scaffold = tester.widget(scaffoldFinder);
-      expect(scaffold.backgroundColor, CupertinoColors.white);
+      expect(
+        scaffold.backgroundColor,
+        equals(CupertinoColors.systemGroupedBackground),
+      );
     } finally {
       debugDefaultTargetPlatformOverride = null;
     }
