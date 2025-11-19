@@ -13,45 +13,42 @@ class HomeScreen extends StatelessWidget {
     items.add(selectedItem);
 
     final List<Widget> children = [
-        DraftModeUISection(
-          header: 'Basics',
-          children: [
-            DraftModeUIRow(const Text('Untitled note')),
-            DraftModeUIRow(
-              Text('Save to DraftMode'),
-              label: 'Destination',
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        DraftModeUISection(
-          header: 'Custom label width',
-          labelWidth: 120,
-          children: [
-            DraftModeUIRow(const Text('Auto')),
-            DraftModeUIRow(
-              Text('19.04.2024'),
-              label: 'Created',
-            ),
-          ],
-        ),
-        DraftModeUISection(header: 'Custom label width', children: [
-          DraftModeUIList(
-            items: items,
-            selectedItem: selectedItem,
-            itemBuilder: (item, isSelected) {
-              return Text(item.value);
-            },
-            onTap: (item) {
-              debugPrint("pressedOnTab#${item.id}");
-            },
-          )
-        ]),
-      ];
+      DraftModeUISection(
+        header: 'Basics',
+        children: [
+          DraftModeUIRow(const Text('Untitled note')),
+          DraftModeUIRow(
+            Text('Save to DraftMode'),
+            label: 'Destination',
+          ),
+        ],
+      ),
+      const SizedBox(height: 24),
+      DraftModeUISection(
+        header: 'Custom label width',
+        labelWidth: 120,
+        children: [
+          DraftModeUIRow(const Text('Auto')),
+          DraftModeUIRow(
+            Text('19.04.2024'),
+            label: 'Created',
+          ),
+        ],
+      ),
+      DraftModeUISection(header: 'Custom label width', children: [
+        DraftModeUIList(
+          items: items,
+          selectedItem: selectedItem,
+          itemBuilder: (item, isSelected) {
+            return Text(item.value);
+          },
+          onTap: (item) {
+            debugPrint("pressedOnTab#${item.id}");
+          },
+        )
+      ]),
+    ];
 
-    return DraftModeUIPageExample(
-      title: 'DraftMode UI',
-      children: children
-    );
+    return DraftModeUIPageExample(title: 'DraftMode UI', children: children);
   }
 }

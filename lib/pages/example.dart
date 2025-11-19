@@ -57,12 +57,15 @@ class _HeaderCard extends StatelessWidget {
               children: [
                 Text(
                   'DraftMode',
-                  style: TextStyle(fontSize: DraftModeUIStyleFontSize.xLarge, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      fontSize: DraftModeUIStyleFontSize.xLarge,
+                      fontWeight: FontWeight.w600),
                 ),
                 SizedBox(height: 4),
                 Text(
                   'Development is infinite\n...like your mind',
-                  style: TextStyle(fontSize: DraftModeUIStyleFontSize.secondary),
+                  style:
+                      TextStyle(fontSize: DraftModeUIStyleFontSize.secondary),
                 ),
               ],
             ),
