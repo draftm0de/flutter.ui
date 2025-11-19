@@ -1,0 +1,169 @@
+import 'package:draftmode_ui/buttons.dart';
+import 'package:draftmode_ui/platform.dart';
+import 'package:draftmode_ui/styles.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'navigation/bottom.dart';
+import 'navigation/bottom_item.dart';
+import 'navigation/top.dart';
+import 'navigation/top_item.dart';
+
+/// Encapsulates shared scaffolding behaviour for DraftMode pages.
+///
+/// Provides platform-aware navigation bars, optional save/back handling, and a
+/// bottom navigation container. Business logic should be provided via callbacks
+/// and injected widgets to keep this component purely presentational.
+class DraftModeUIPage extends StatelessWidget {
+  /// Default placeholder used when the caller does not specify a leading widget.
+  static const Widget defaultLeading = SizedBox.shrink();
+
+  /// Title displayed in the navigation bar.
+  final String? navigationTitle;
+
+  /// Optional label rendered next to the platform back icon when [topLeading]
+  /// is not provided. When `null`, the control renders icon-only.
+  final String? topLeadingText;
+
+  /// Custom leading widget; falls back to a platform back button.
+  final Widget? topLeading;
+
+  /// Widgets displayed on the right side of the navigation bar.
+  final List<DraftModePageNavigationTopItem>? topTrailing;
+
+  /// Widgets anchored to the left side of the bottom bar.
+  final List<DraftModePageNavigationBottomItem>? bottomLeading;
+
+  final DraftModePageNavigationBottomItem? bottomCenter;
+
+  /// Widgets anchored to the right side of the bottom bar.
+  final List<DraftModePageNavigationBottomItem>? bottomTrailing;
+
+  /// Main content of the page.
+  final Widget body;
+
+  /// Optional callback invoked when the save action is triggered; returning
+  /// `true` pops the page with a positive result.
+  final Future<bool> Function()? onSavePressed;
+
+  /// Horizontal padding applied around [body].
+  final double? horizontalContainerPadding;
+
+  /// Vertical padding applied around [body].
+  final double? verticalContainerPadding;
+
+  /// Overrides the default background colour.
+  final Color? containerBackgroundColor;
+
+  const DraftModeUIPage({
+    super.key,
+    required this.body,
+    this.navigationTitle,
+    this.topLeadingText,
+    this.topLeading = defaultLeading,
+    this.topTrailing,
+    this.bottomLeading,
+    this.bottomCenter,
+    this.bottomTrailing,
+    this.onSavePressed,
+    this.horizontalContainerPadding,
+    this.verticalContainerPadding,
+    this.containerBackgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Future<void> btnBackPressed({bool? result}) async {
+      final nav = Navigator.of(context);
+      if (nav.canPop()) {
+        nav.pop<bool?>(result);
+      }
+    }
+
+    Future<void> handleSavePressed() async {
+      final bool? success = await onSavePressed?.call();
+      if (success == true) await btnBackPressed(result: true);
+    }
+
+    Widget? topLeadingElement;
+    if (topLeading == defaultLeading) {
+      final bool allowLeadingText =
+          DraftModeUIPlatform.isIOS && (topLeadingText?.isNotEmpty ?? false);
+      topLeadingElement = DraftModePageNavigationTopItem(
+        text: allowLeadingText ? topLeadingText : null,
+        icon: DraftModeUIButton.back,
+        onTap: btnBackPressed,
+      );
+    } else {
+      topLeadingElement = topLeading;
+    }
+
+    final List<Widget> automaticTrailing = onSavePressed != null
+        ? [
+            DraftModePageNavigationTopItem(
+              icon: DraftModeUIButton.save,
+              onTap: handleSavePressed,
+            ),
+          ]
+        : const [];
+
+    final navigationTop = DraftModePageNavigationTop(
+      title: navigationTitle,
+      leading: topLeadingElement,
+      trailing: topTrailing ?? automaticTrailing,
+    );
+
+    final navigationBottom = (bottomLeading?.isNotEmpty == true ||
+            bottomTrailing?.isNotEmpty == true ||
+            bottomCenter != null)
+        ? DraftModePageNavigationBottom(
+            leading: bottomLeading,
+            primary: bottomCenter,
+            trailing: bottomTrailing,
+          )
+        : null;
+
+    final double horizontalPadding =
+        horizontalContainerPadding ?? DraftModeUIStylePadding.primary;
+    final double verticalPadding =
+        verticalContainerPadding ?? DraftModeUIStylePadding.secondary;
+
+    final Widget paddedBody = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPadding,
+        vertical: verticalPadding,
+      ),
+      child: body,
+    );
+
+    final Widget content = (navigationBottom == null)
+        ? SafeArea(top: false, child: paddedBody)
+        : Column(
+            children: [
+              Expanded(
+                child: SafeArea(
+                  top: false,
+                  bottom: false,
+                  child: paddedBody,
+                ),
+              ),
+              navigationBottom,
+            ],
+          );
+
+    final Color background =
+        containerBackgroundColor ?? DraftModeUIStyleColor.tertiary.background;
+
+    return DraftModeUIPlatform.isIOS
+        ? CupertinoPageScaffold(
+            backgroundColor: background,
+            navigationBar: navigationTop,
+            child: content,
+          )
+        : Scaffold(
+            appBar: navigationTop,
+            backgroundColor: background,
+            body: content,
+          );
+  }
+}

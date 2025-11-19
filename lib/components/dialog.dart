@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart'
-    show TargetPlatform, defaultTargetPlatform;
-
+import 'package:draftmode_ui/platform.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as m;
 
@@ -33,8 +31,6 @@ class DraftModeUIDialog extends StatefulWidget {
     this.autoConfirm,
   });
 
-  static bool get isIOS => defaultTargetPlatform == TargetPlatform.iOS;
-
   /// Displays the dialog using platform-aware styling and returns the choice.
   static Future<bool?> show({
     required BuildContext context,
@@ -46,9 +42,9 @@ class DraftModeUIDialog extends StatefulWidget {
     DraftModeUIDialogStyle mode = DraftModeUIDialogStyle.confirm,
     Duration? autoConfirm,
   }) async {
-    final bool dismissible = barrierDismissible ?? !isIOS;
+    final bool dismissible = barrierDismissible ?? !DraftModeUIPlatform.isIOS;
 
-    if (isIOS) {
+    if (DraftModeUIPlatform.isIOS) {
       return showCupertinoDialog<bool>(
         context: context,
         barrierDismissible: dismissible,
@@ -133,8 +129,6 @@ class _DraftModeUIDialogState extends State<DraftModeUIDialog> {
         ':${remainder.toString().padLeft(2, '0')}';
   }
 
-  static bool get isIOS => defaultTargetPlatform == TargetPlatform.iOS;
-
   @override
   Widget build(BuildContext context) {
     final localization = DraftModeLocalizations.of(context);
@@ -155,7 +149,7 @@ class _DraftModeUIDialogState extends State<DraftModeUIDialog> {
         ? widget.message
         : '${widget.message}\n$countdownText';
 
-    if (isIOS) {
+    if (DraftModeUIPlatform.isIOS) {
       return CupertinoAlertDialog(
         title: Text(widget.title),
         content: Padding(

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:draftmode_ui/ui.dart';
+import 'package:draftmode_ui/components.dart';
 import 'package:draftmode_localization/localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
