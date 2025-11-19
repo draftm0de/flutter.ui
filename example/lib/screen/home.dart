@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
     final List<Widget> children = [
       DraftModeUISection(
-        header: 'Basics',
+        header: 'Basic Section',
         children: [
           DraftModeUIRow(const Text('Untitled note')),
           DraftModeUIRow(
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
       ),
       const SizedBox(height: 24),
       DraftModeUISection(
-        header: 'Custom label width',
+        header: 'Basic Section (custom label width)',
         labelWidth: 120,
         children: [
           DraftModeUIRow(const Text('Auto')),
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      DraftModeUISection(header: 'Custom label width', children: [
+      DraftModeUISection(header: 'List View', children: [
         DraftModeUIList(
           items: items,
           selectedItem: selectedItem,

@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+
+## 1.0.1+1
+- Added `DraftModeUIList` default separators that mirror Cupertino inset-grouped
+  dividers when no custom separator is provided, updated inline docs/README, and
+  expanded tests/coverage to keep the behavior locked in.
 - Added the page scaffolding library, including `DraftModeUIPage`, navigation
   bars, and navigation items backed by platform-aware defaults.
 - Introduced shared `DraftModeUIStyle*` spacing/colour tokens plus

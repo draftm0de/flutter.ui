@@ -163,7 +163,10 @@ When `selectedItem` matches an element by identity a trailing checkmark is
 rendered automatically. Supplying `onRefresh` switches to a
 `CustomScrollView`/`CupertinoSliverRefreshControl` pair without additional
 plumbing, and `emptyPlaceholder` gets wrapped in a `DraftModeUIRow` so empty
-states still align with the rest of the grouped UI.
+states still align with the rest of the grouped UI. When `separator` is
+omitted the widget paints a Cupertino-style divider that mimics inset grouped
+lists; pass a custom widget (or `SizedBox.shrink()`) to override or remove that
+default treatment.
 
 ## DraftModeUIPage
 

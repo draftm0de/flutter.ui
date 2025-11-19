@@ -78,4 +78,17 @@ void main() {
       const EdgeInsets.symmetric(horizontal: 20),
     );
   });
+
+  test('DraftModeUISectionScope never notifies listeners', () {
+    const previous = DraftModeUISectionScope(
+      labelWidth: 120,
+      child: SizedBox(),
+    );
+    const current = DraftModeUISectionScope(
+      labelWidth: 200,
+      child: SizedBox(),
+    );
+
+    expect(current.updateShouldNotify(previous), isFalse);
+  });
 }

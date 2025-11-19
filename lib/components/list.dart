@@ -48,18 +48,21 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
   final Widget? separator;
 
   final Future<void> Function()? onRefresh;
+  final EdgeInsetsGeometry? padding;
 
   /// Platform-aware grouped list with DraftMode's row styling baked in.
   ///
   /// When [items] is empty the widget renders [emptyPlaceholder] (falling back
   /// to a zero-sized box) wrapped in a [DraftModeUIRow] so it lines up with
-  /// other grouped elements. Provide [separator] to use `ListView.separated`
-  /// and [header] for leading content (commonly a [DraftModeUIRow] label).
+  /// other grouped elements. The list always draws a platform-aligned divider
+  /// between rows; override [separator] (or pass `SizedBox.shrink()`) to change
+  /// or remove the default dashed line. Provide [header] for leading content
+  /// (commonly a [DraftModeUIRow] label).
   /// Supplying [onRefresh] automatically switches to a `CustomScrollView` with
   /// `CupertinoSliverRefreshControl` while still honoring the list's original
-  /// configuration. Selection relies on identity equality, so pass the exact
-  /// item instance to [selectedItem] when you want the trailing check icon to
-  /// render.
+  /// configuration and [padding]. Selection relies on identity equality, so
+  /// pass the exact item instance to [selectedItem] when you want the trailing
+  /// check icon to render.
   const DraftModeUIList({
     super.key,
     this.isPending = false,
@@ -71,6 +74,7 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
     this.header,
     this.separator,
     this.onRefresh,
+    this.padding,
   });
 
   @override
@@ -83,30 +87,18 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
           : DraftModeUIRow(emptyPlaceholder!);
       content = _wrapWithPlaceholder(context, placeholder);
     } else {
-      if (separator != null) {
-        final listView = ListView.separated(
-          shrinkWrap: true,
-          itemBuilder: (context, index) =>
-              _buildListItem(context, items[index]),
-          separatorBuilder: (context, index) => separator!,
-          itemCount: items.length,
-        );
-        final Widget list =
-            (onRefresh != null) ? _buildRefreshList(listView) : listView;
-        content = (header != null)
-            ? Column(children: [header!, separator!, list])
-            : list;
-      } else {
-        final listView = ListView.builder(
-          shrinkWrap: true,
-          itemCount: items.length,
-          itemBuilder: (context, index) =>
-              _buildListItem(context, items[index]),
-        );
-        final Widget list =
-            (onRefresh != null) ? _buildRefreshList(listView) : listView;
-        content = (header != null) ? Column(children: [header!, list]) : list;
-      }
+      final listView = ListView.separated(
+        shrinkWrap: true,
+        padding: padding,
+        itemBuilder: (context, index) => _buildListItem(context, items[index]),
+        separatorBuilder: (context, index) => _buildSeparatorWidget(),
+        itemCount: items.length,
+      );
+      final Widget list =
+          (onRefresh != null) ? _buildRefreshList(listView) : listView;
+      content = (header != null)
+          ? Column(children: [header!, _buildSeparatorWidget(), list])
+          : list;
     }
 
     if (isPending) {
@@ -114,6 +106,22 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
     }
 
     return content;
+  }
+
+  Widget _buildSeparatorWidget() {
+    final custom = separator;
+    if (custom != null) {
+      return custom;
+    }
+    return _defaultSeparator();
+  }
+
+  Widget _defaultSeparator() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: DraftModeUIStylePadding.primary),
+      height: 0.5,
+      color: CupertinoColors.separator,
+    );
   }
 
   Widget _wrapWithPlaceholder(BuildContext context, Widget child) {
