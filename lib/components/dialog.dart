@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:draftmode_ui/platform.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as m;
-
 import 'package:draftmode_localization/localizations.dart';
+import 'package:draftmode_ui/platform.dart';
+import 'package:draftmode_ui/context.dart';
 
 enum DraftModeUIDialogStyle { confirm, error }
 
@@ -32,8 +32,11 @@ class DraftModeUIDialog extends StatefulWidget {
   });
 
   /// Displays the dialog using platform-aware styling and returns the choice.
+  ///
+  /// Provide a [context] argument or call [DraftModeUIContext.init] earlier in
+  /// the app lifecycle so the helper can derive a fallback navigator context.
   static Future<bool?> show({
-    required BuildContext context,
+    BuildContext? context,
     required String title,
     required String message,
     String? confirmLabel,
@@ -42,11 +45,12 @@ class DraftModeUIDialog extends StatefulWidget {
     DraftModeUIDialogStyle mode = DraftModeUIDialogStyle.confirm,
     Duration? autoConfirm,
   }) async {
+    final resolvedContext = DraftModeUIContext.buildContext(context);
     final bool dismissible = barrierDismissible ?? !DraftModeUIPlatform.isIOS;
 
     if (DraftModeUIPlatform.isIOS) {
       return showCupertinoDialog<bool>(
-        context: context,
+        context: resolvedContext,
         barrierDismissible: dismissible,
         builder: (_) => DraftModeUIDialog(
           title: title,
@@ -60,7 +64,7 @@ class DraftModeUIDialog extends StatefulWidget {
     }
 
     return m.showDialog<bool>(
-      context: context,
+      context: resolvedContext,
       barrierDismissible: dismissible,
       builder: (_) => DraftModeUIDialog(
         title: title,

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../buttons.dart';
-import '../styles.dart';
+import 'package:draftmode_ui/buttons.dart';
+import 'package:draftmode_ui/styles.dart';
 import 'row.dart';
 import 'spinner.dart';
 
@@ -208,7 +208,7 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
         Expanded(child: child),
         SizedBox(width: DraftModeUIStylePadding.tertiary),
         Icon(
-          DraftModeUIButton.checked,
+          DraftModeUIButtons.checked,
           size: DraftModeUIStyleIconSize.large,
         ),
         SizedBox(width: DraftModeUIStylePadding.tertiary),

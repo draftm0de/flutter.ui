@@ -1,5 +1,5 @@
-import 'package:draftmode_ui/platform.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:draftmode_ui/platform.dart';
 
 /// Lightweight activity indicator used while loading page content.
 class DraftModeUISpinner extends StatelessWidget {

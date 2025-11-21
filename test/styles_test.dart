@@ -34,6 +34,18 @@ void main() {
     expect(tertiary.text, CupertinoColors.secondaryLabel);
   });
 
+  test('DraftModeUIStyleColorTint exposes accent palette', () {
+    final primary = DraftModeUIStyleColorTint.primary;
+    final secondary = DraftModeUIStyleColorTint.secondary;
+    final tertiary = DraftModeUIStyleColorTint.tertiary;
+    final quaternary = DraftModeUIStyleColorTint.quaternary;
+
+    expect(primary.background, CupertinoColors.systemBlue);
+    expect(secondary.background, CupertinoColors.systemRed);
+    expect(tertiary.background, CupertinoColors.activeGreen);
+    expect(quaternary.background, CupertinoColors.black);
+  });
+
   test('DraftModeUIStyleText composes typography tokens', () {
     final primary = DraftModeUIStyleText.primary;
     final tertiary = DraftModeUIStyleText.tertiary;
@@ -41,6 +53,26 @@ void main() {
     expect(primary.color, DraftModeUIStyleColor.primary.text);
     expect(primary.fontSize, DraftModeUIStyleFontSize.primary);
     expect(tertiary.fontSize, DraftModeUIStyleFontSize.tertiary);
+  });
+
+  test('DraftModeUIStyleButtonSizes encode dimensions', () {
+    final large = DraftModeUIStyleButtonSizes.large;
+    final medium = DraftModeUIStyleButtonSizes.medium;
+    final small = DraftModeUIStyleButtonSizes.small;
+
+    expect(large.height, 48);
+    expect(medium.fontSize, 16);
+    expect(small.height, 34);
+  });
+
+  test('DraftModeUIStyleButtonColors provide fallbacks', () {
+    final submit = DraftModeUIStyleButtonColors.submit;
+    final dateTime = DraftModeUIStyleButtonColors.dateTime;
+    final inline = DraftModeUIStyleButtonColors.inline;
+
+    expect(submit.background, DraftModeUIStyleColorTint.primary.background);
+    expect(dateTime.background, CupertinoColors.systemGrey5);
+    expect(inline.font, DraftModeUIStyleColorTint.primary.background);
   });
 
   test('DraftModeUIStyleIconSize + font sizes remain consistent', () {

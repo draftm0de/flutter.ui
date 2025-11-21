@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'platform.dart';
 
 /// Convenience accessors for platform-aware icons.
-class DraftModeUIButton {
+class DraftModeUIButtons {
   static IconData get back =>
       DraftModeUIPlatform.isIOS ? CupertinoIcons.back : Icons.arrow_back;
 

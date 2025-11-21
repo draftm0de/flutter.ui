@@ -3,8 +3,6 @@ import 'package:draftmode_ui_example/screen/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 class App extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -32,7 +30,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return PlatformProvider(
       builder: (context) => PlatformApp(
-        navigatorKey: navigatorKey,
+        navigatorKey: widget.navigatorKey,
         debugShowCheckedModeBanner: false,
         localizationsDelegates: DraftModeLocalizations.localizationsDelegates,
         supportedLocales: DraftModeLocalizations.supportedLocales,

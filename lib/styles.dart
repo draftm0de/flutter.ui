@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DraftModeUIStylePadding {
   static double get primary => 16;
@@ -49,6 +50,29 @@ class DraftModeUIStyleColor {
       );
 }
 
+class DraftModeUIStyleColorTint {
+  static DraftModeUIStyleColorRole get primary =>
+      const DraftModeUIStyleColorRole(
+        background: CupertinoColors.systemBlue,
+        text: CupertinoColors.white,
+      );
+  static DraftModeUIStyleColorRole get secondary =>
+      const DraftModeUIStyleColorRole(
+        background: CupertinoColors.systemRed,
+        text: CupertinoColors.white,
+      );
+  static DraftModeUIStyleColorRole get tertiary =>
+      const DraftModeUIStyleColorRole(
+        background: CupertinoColors.activeGreen,
+        text: CupertinoColors.black,
+      );
+  static DraftModeUIStyleColorRole get quaternary =>
+      const DraftModeUIStyleColorRole(
+        background: CupertinoColors.black,
+        text: CupertinoColors.white,
+      );
+}
+
 /// Canonical text styles used across DraftMode UI widgets.
 class DraftModeUIStyleText {
   static TextStyle get primary => TextStyle(
@@ -58,6 +82,61 @@ class DraftModeUIStyleText {
   static TextStyle get tertiary => TextStyle(
         color: DraftModeUIStyleColor.primary.text,
         fontSize: DraftModeUIStyleFontSize.tertiary,
+      );
+}
+
+class DraftModeUIStyleButtonSize {
+  final double height;
+  final double fontSize;
+  final FontWeight fontWeight;
+  const DraftModeUIStyleButtonSize({
+    required this.height,
+    required this.fontSize,
+    required this.fontWeight,
+  });
+}
+
+class DraftModeUIStyleButtonSizes {
+  static DraftModeUIStyleButtonSize get large =>
+      const DraftModeUIStyleButtonSize(
+        height: 48,
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+      );
+
+  static DraftModeUIStyleButtonSize get medium =>
+      const DraftModeUIStyleButtonSize(
+        height: 40,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+      );
+
+  static DraftModeUIStyleButtonSize get small =>
+      const DraftModeUIStyleButtonSize(
+        height: 34,
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+      );
+}
+
+class DraftModeUIStyleButtonColor {
+  final Color? background;
+  final Color font;
+  const DraftModeUIStyleButtonColor({this.background, required this.font});
+}
+
+class DraftModeUIStyleButtonColors {
+  static DraftModeUIStyleButtonColor get submit => DraftModeUIStyleButtonColor(
+        background: DraftModeUIStyleColorTint.primary.background,
+        font: DraftModeUIStyleColorTint.primary.text,
+      );
+  static DraftModeUIStyleButtonColor get dateTime =>
+      DraftModeUIStyleButtonColor(
+        background: CupertinoColors.systemGrey5,
+        font: Colors.black,
+      );
+  static DraftModeUIStyleButtonColor get inline => DraftModeUIStyleButtonColor(
+        font: DraftModeUIStyleColorTint.primary.background,
       );
 }
 

@@ -58,7 +58,7 @@ void main() {
       ),
     );
 
-    expect(find.byIcon(DraftModeUIButton.checked), findsOneWidget);
+    expect(find.byIcon(DraftModeUIButtons.checked), findsOneWidget);
     await tester.tap(find.text('Second false'));
     expect(tapped, items.last);
   });
