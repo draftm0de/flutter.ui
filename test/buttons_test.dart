@@ -10,26 +10,27 @@ void main() {
   test('DraftModeUIButton resolves to Cupertino icons on iOS', () {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     try {
-      expect(DraftModeUIButton.back, CupertinoIcons.back);
-      expect(DraftModeUIButton.close, CupertinoIcons.clear);
-      expect(DraftModeUIButton.cancel, CupertinoIcons.multiply_circle);
-      expect(DraftModeUIButton.settings, CupertinoIcons.settings);
-      expect(DraftModeUIButton.save, CupertinoIcons.check_mark);
-      expect(DraftModeUIButton.checked, CupertinoIcons.check_mark);
-      expect(DraftModeUIButton.checkSecondary, CupertinoIcons.checkmark_alt);
-      expect(DraftModeUIButton.logout, CupertinoIcons.square_arrow_right);
-      expect(DraftModeUIButton.start, CupertinoIcons.largecircle_fill_circle);
-      expect(DraftModeUIButton.stop, CupertinoIcons.stop_fill);
-      expect(DraftModeUIButton.edit, CupertinoIcons.square_pencil);
-      expect(DraftModeUIButton.plus, CupertinoIcons.plus);
-      expect(DraftModeUIButton.arrowRight, CupertinoIcons.right_chevron);
-      expect(DraftModeUIButton.arrowDown, CupertinoIcons.chevron_down);
-      expect(DraftModeUIButton.arrowLeft, CupertinoIcons.chevron_left);
-      expect(DraftModeUIButton.arrowUp, CupertinoIcons.chevron_up);
-      expect(DraftModeUIButton.personCircle, CupertinoIcons.person_crop_circle);
-      expect(DraftModeUIButton.eye, CupertinoIcons.eye);
-      expect(DraftModeUIButton.eyeSlash, CupertinoIcons.eye_slash);
-      expect(DraftModeUIButton.trash, CupertinoIcons.delete);
+      expect(DraftModeUIButtons.back, CupertinoIcons.back);
+      expect(DraftModeUIButtons.close, CupertinoIcons.clear);
+      expect(DraftModeUIButtons.cancel, CupertinoIcons.multiply_circle);
+      expect(DraftModeUIButtons.settings, CupertinoIcons.settings);
+      expect(DraftModeUIButtons.save, CupertinoIcons.check_mark);
+      expect(DraftModeUIButtons.checked, CupertinoIcons.check_mark);
+      expect(DraftModeUIButtons.checkSecondary, CupertinoIcons.checkmark_alt);
+      expect(DraftModeUIButtons.logout, CupertinoIcons.square_arrow_right);
+      expect(DraftModeUIButtons.start, CupertinoIcons.largecircle_fill_circle);
+      expect(DraftModeUIButtons.stop, CupertinoIcons.stop_fill);
+      expect(DraftModeUIButtons.edit, CupertinoIcons.square_pencil);
+      expect(DraftModeUIButtons.plus, CupertinoIcons.plus);
+      expect(DraftModeUIButtons.arrowRight, CupertinoIcons.right_chevron);
+      expect(DraftModeUIButtons.arrowDown, CupertinoIcons.chevron_down);
+      expect(DraftModeUIButtons.arrowLeft, CupertinoIcons.chevron_left);
+      expect(DraftModeUIButtons.arrowUp, CupertinoIcons.chevron_up);
+      expect(
+          DraftModeUIButtons.personCircle, CupertinoIcons.person_crop_circle);
+      expect(DraftModeUIButtons.eye, CupertinoIcons.eye);
+      expect(DraftModeUIButtons.eyeSlash, CupertinoIcons.eye_slash);
+      expect(DraftModeUIButtons.trash, CupertinoIcons.delete);
     } finally {
       debugDefaultTargetPlatformOverride = null;
     }
@@ -38,26 +39,26 @@ void main() {
   test('DraftModeUIButton resolves to Material icons on Android', () {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
     try {
-      expect(DraftModeUIButton.back, Icons.arrow_back);
-      expect(DraftModeUIButton.close, Icons.close);
-      expect(DraftModeUIButton.cancel, Icons.circle);
-      expect(DraftModeUIButton.settings, Icons.settings);
-      expect(DraftModeUIButton.save, Icons.check);
-      expect(DraftModeUIButton.checked, Icons.check);
-      expect(DraftModeUIButton.checkSecondary, Icons.check);
-      expect(DraftModeUIButton.logout, Icons.logout);
-      expect(DraftModeUIButton.start, Icons.mode_standby);
-      expect(DraftModeUIButton.stop, Icons.stop);
-      expect(DraftModeUIButton.edit, Icons.edit_square);
-      expect(DraftModeUIButton.plus, Icons.plus_one_rounded);
-      expect(DraftModeUIButton.arrowRight, Icons.chevron_right);
-      expect(DraftModeUIButton.arrowDown, Icons.arrow_drop_down);
-      expect(DraftModeUIButton.arrowLeft, Icons.chevron_left);
-      expect(DraftModeUIButton.arrowUp, Icons.arrow_drop_up);
-      expect(DraftModeUIButton.personCircle, Icons.person);
-      expect(DraftModeUIButton.eye, Icons.visibility);
-      expect(DraftModeUIButton.eyeSlash, Icons.visibility_off);
-      expect(DraftModeUIButton.trash, Icons.delete);
+      expect(DraftModeUIButtons.back, Icons.arrow_back);
+      expect(DraftModeUIButtons.close, Icons.close);
+      expect(DraftModeUIButtons.cancel, Icons.circle);
+      expect(DraftModeUIButtons.settings, Icons.settings);
+      expect(DraftModeUIButtons.save, Icons.check);
+      expect(DraftModeUIButtons.checked, Icons.check);
+      expect(DraftModeUIButtons.checkSecondary, Icons.check);
+      expect(DraftModeUIButtons.logout, Icons.logout);
+      expect(DraftModeUIButtons.start, Icons.mode_standby);
+      expect(DraftModeUIButtons.stop, Icons.stop);
+      expect(DraftModeUIButtons.edit, Icons.edit_square);
+      expect(DraftModeUIButtons.plus, Icons.plus_one_rounded);
+      expect(DraftModeUIButtons.arrowRight, Icons.chevron_right);
+      expect(DraftModeUIButtons.arrowDown, Icons.arrow_drop_down);
+      expect(DraftModeUIButtons.arrowLeft, Icons.chevron_left);
+      expect(DraftModeUIButtons.arrowUp, Icons.arrow_drop_up);
+      expect(DraftModeUIButtons.personCircle, Icons.person);
+      expect(DraftModeUIButtons.eye, Icons.visibility);
+      expect(DraftModeUIButtons.eyeSlash, Icons.visibility_off);
+      expect(DraftModeUIButtons.trash, Icons.delete);
     } finally {
       debugDefaultTargetPlatformOverride = null;
     }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:draftmode_ui/components.dart';
+import 'package:draftmode_ui/context.dart';
 import 'package:draftmode_localization/localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  setUp(DraftModeUIContext.debugReset);
+  tearDown(DraftModeUIContext.debugReset);
+
   group('DraftModeUIDialog.show', () {
     testWidgets(
       'shows Material dialog with localized labels and returns selection',
@@ -202,6 +206,53 @@ void main() {
         });
       },
     );
+
+    testWidgets('uses DraftModeUI navigatorKey when context omitted', (
+      tester,
+    ) async {
+      await _withTargetPlatform(TargetPlatform.android, () async {
+        final result = ValueNotifier<bool?>(null);
+        final navigatorKey = GlobalKey<NavigatorState>();
+
+        DraftModeUIContext.init(navigatorKey: navigatorKey);
+
+        await tester.pumpWidget(
+          _wrapWithLocalization(
+            provideLocalization: true,
+            child: _TestApp(
+              result: result,
+              autoConfirm: null,
+              mode: DraftModeUIDialogStyle.confirm,
+              provideLocalization: true,
+              navigatorKey: navigatorKey,
+              useGlobalContext: true,
+            ),
+          ),
+        );
+
+        await tester.tap(find.byKey(_TestApp.launchKey));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(AlertDialog), findsOneWidget);
+
+        await tester.tap(find.text('Yes'));
+        await tester.pumpAndSettle();
+
+        expect(result.value, isTrue);
+      });
+    });
+
+    testWidgets('throws when no context registered globally', (tester) async {
+      await _withTargetPlatform(TargetPlatform.android, () async {
+        await expectLater(
+          DraftModeUIDialog.show(
+            title: 'Confirm',
+            message: 'Missing context',
+          ),
+          throwsA(isA<StateError>()),
+        );
+      });
+    });
   });
 }
 
@@ -245,6 +296,8 @@ class _TestApp extends StatelessWidget {
     required this.mode,
     required this.provideLocalization,
     this.showImmediately = false,
+    this.navigatorKey,
+    this.useGlobalContext = false,
   });
 
   final ValueNotifier<bool?> result;
@@ -252,6 +305,8 @@ class _TestApp extends StatelessWidget {
   final DraftModeUIDialogStyle mode;
   final bool provideLocalization;
   final bool showImmediately;
+  final GlobalKey<NavigatorState>? navigatorKey;
+  final bool useGlobalContext;
 
   static const launchKey = Key('launch-dialog');
 
@@ -262,9 +317,11 @@ class _TestApp extends StatelessWidget {
       autoConfirm: autoConfirm,
       mode: mode,
       showImmediately: showImmediately,
+      useGlobalContext: useGlobalContext,
     );
 
     return MaterialApp(
+      navigatorKey: navigatorKey,
       localizationsDelegates: provideLocalization
           ? DraftModeLocalizations.localizationsDelegates
           : const <LocalizationsDelegate<dynamic>>[],
@@ -282,12 +339,14 @@ class _DialogLauncher extends StatefulWidget {
     required this.autoConfirm,
     required this.mode,
     required this.showImmediately,
+    required this.useGlobalContext,
   });
 
   final ValueNotifier<bool?> result;
   final Duration? autoConfirm;
   final DraftModeUIDialogStyle mode;
   final bool showImmediately;
+  final bool useGlobalContext;
 
   @override
   State<_DialogLauncher> createState() => _DialogLauncherState();
@@ -304,7 +363,7 @@ class _DialogLauncherState extends State<_DialogLauncher> {
 
   Future<void> _launchDialog() async {
     final choice = await DraftModeUIDialog.show(
-      context: context,
+      context: widget.useGlobalContext ? null : context,
       title: 'Confirm',
       message: 'Do the thing?',
       mode: widget.mode,

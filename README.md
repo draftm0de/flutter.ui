@@ -10,6 +10,8 @@ the bundled assets.
 
 - `package:draftmode_ui/components.dart` – dialog helpers plus shared form rows
   and sections.
+- `package:draftmode_ui/context.dart` – app-wide helpers including
+  `DraftModeUIContext.init` for shared navigator/context wiring.
 - `package:draftmode_ui/pages.dart` – page scaffolds, navigation bars and
   navigation item widgets.
 - `package:draftmode_ui/buttons.dart` – platform-aware icon tokens via `DraftModeUIButton`.
@@ -78,6 +80,35 @@ if (confirmed == true) {
 
 Pass `DraftModeUIDialogStyle.error` to hide the cancel button and show a
 red accent on Material buttons.
+
+### Global Context Wiring
+
+Call `DraftModeUIContext.init` once during bootstrap to register either a
+`navigatorKey` or a root `BuildContext`. Afterwards you can invoke the dialog
+without supplying a `context` each time:
+
+```dart
+final navigatorKey = GlobalKey<NavigatorState>();
+
+void main() {
+  DraftModeUIContext.init(navigatorKey: navigatorKey);
+  runApp(MyApp(navigatorKey: navigatorKey));
+}
+
+Future<void> _delete() async {
+  final confirmed = await DraftModeUIDialog.show(
+    title: 'Delete file?',
+    message: 'This cannot be undone.',
+  );
+  if (confirmed == true) {
+    // Proceed with deletion.
+  }
+}
+```
+
+When neither argument is passed to `DraftModeUIDialog.show` nor registered via
+`DraftModeUIContext.init` the helper throws a `StateError` to highlight the missing
+context.
 
 ### Auto-confirm Countdown
 

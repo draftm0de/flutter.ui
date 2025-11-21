@@ -91,7 +91,7 @@ class DraftModeUIPage extends StatelessWidget {
           DraftModeUIPlatform.isIOS && (topLeadingText?.isNotEmpty ?? false);
       topLeadingElement = DraftModePageNavigationTopItem(
         text: allowLeadingText ? topLeadingText : null,
-        icon: DraftModeUIButton.back,
+        icon: DraftModeUIButtons.back,
         onTap: btnBackPressed,
       );
     } else {
@@ -101,7 +101,7 @@ class DraftModeUIPage extends StatelessWidget {
     final List<Widget> automaticTrailing = onSavePressed != null
         ? [
             DraftModePageNavigationTopItem(
-              icon: DraftModeUIButton.save,
+              icon: DraftModeUIButtons.save,
               onTap: handleSavePressed,
             ),
           ]

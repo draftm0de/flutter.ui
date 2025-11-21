@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'item.dart';
 import 'package:draftmode_ui/styles.dart';
+import 'item.dart';
 
 /// Convenience wrapper configuring a [DraftModePageNavigationItem] for the bottom bar.
 class DraftModePageNavigationBottomItem extends StatelessWidget {

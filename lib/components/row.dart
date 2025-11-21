@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../styles.dart';
+import 'package:draftmode_ui/styles.dart';
 import 'section.dart';
 
 /// Displays a form row with an optional leading label and adaptive padding.

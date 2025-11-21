@@ -1,9 +1,17 @@
 import 'package:draftmode_ui/components.dart';
 import 'package:draftmode_ui/pages.dart';
+import 'package:draftmode_ui/styles.dart';
 import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  Future<void> _showDialog(BuildContext context) async {
+    await DraftModeUIDialog.show(
+      title: 'Title',
+      message: 'Message',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +53,14 @@ class HomeScreen extends StatelessWidget {
           onTap: (item) {
             debugPrint("pressedOnTab#${item.id}");
           },
+        )
+      ]),
+      DraftModeUISection(header: 'Buttons', children: [
+        DraftModeUIButton(
+          onPressed: () => _showDialog(context),
+          child: Text('openDialog',
+              style:
+                  TextStyle(color: DraftModeUIStyleButtonColors.submit.font)),
         )
       ]),
     ];
