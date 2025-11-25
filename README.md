@@ -236,14 +236,29 @@ to override the automatic controls.
 
 ## DraftModeUIPageExample
 
-`DraftModeUIPageExample` wraps demo widgets in a `CupertinoPageScaffold` with a
-DraftMode-branded header. Pass a title plus a list of children to display below
-the header card.
+`DraftModeUIPageExample` wraps demo widgets in a `DraftModeUIPage` scaffold
+with a DraftMode-branded header. Provide a `title` plus a list of children to
+display below the header card, then override any of the navigation slots to
+preview custom toolbars without rebuilding the chrome.
 
 ```dart
-return const DraftModeUIPageExample(
+return DraftModeUIPageExample(
   title: 'Dialog gallery',
-  children: [
+  navigationTitle: 'Examples',
+  topTrailing: const [
+    DraftModePageNavigationTopItem(icon: CupertinoIcons.add),
+  ],
+  bottomLeading: const [
+    DraftModePageNavigationBottomItem(icon: CupertinoIcons.photo),
+  ],
+  bottomCenter: const DraftModePageNavigationBottomItem(
+    icon: CupertinoIcons.play_arrow_solid,
+  ),
+  bottomTrailing: const [
+    DraftModePageNavigationBottomItem(icon: CupertinoIcons.search),
+  ],
+  onSavePressed: () async => true,
+  children: const [
     DraftModeDialogDemo(),
     SizedBox(height: 24),
     DraftModeAnotherWidget(),
@@ -251,7 +266,10 @@ return const DraftModeUIPageExample(
 );
 ```
 
-The header renders `assets/images/logo.png` bundled with this package.
+Use `topLeadingText` to label the automatic back button, supply
+`containerBackgroundColor` to mimic host app styling, or wire the `onSavePressed`
+callback to preview form confirmations. The header renders the bundled
+`assets/images/logo.png` graphic automatically.
 
 ## Example App
 

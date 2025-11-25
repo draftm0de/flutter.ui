@@ -7,6 +7,52 @@ import 'package:draftmode_ui/context.dart';
 
 enum DraftModeUIDialogStyle { confirm, error }
 
+class DraftModeUIShowDialog {
+  const DraftModeUIShowDialog();
+
+  Future<bool?> show({
+    BuildContext? context,
+    required String title,
+    required String message,
+    String? confirmLabel,
+    String? cancelLabel,
+    bool? barrierDismissible,
+    DraftModeUIDialogStyle mode = DraftModeUIDialogStyle.confirm,
+    Duration? autoConfirm,
+  }) async {
+    final resolvedContext = DraftModeUIContext.buildContext(context);
+    final bool dismissible = barrierDismissible ?? !DraftModeUIPlatform.isIOS;
+
+    if (DraftModeUIPlatform.isIOS) {
+      return showCupertinoDialog<bool>(
+        context: resolvedContext,
+        barrierDismissible: dismissible,
+        builder: (_) => DraftModeUIDialog(
+          title: title,
+          message: message,
+          confirmLabel: confirmLabel,
+          cancelLabel: cancelLabel,
+          mode: mode,
+          autoConfirm: autoConfirm,
+        ),
+      );
+    }
+
+    return m.showDialog<bool>(
+      context: resolvedContext,
+      barrierDismissible: dismissible,
+      builder: (_) => DraftModeUIDialog(
+        title: title,
+        message: message,
+        confirmLabel: confirmLabel,
+        cancelLabel: cancelLabel,
+        mode: mode,
+        autoConfirm: autoConfirm,
+      ),
+    );
+  }
+}
+
 /// Platform-aware confirmation dialog that falls back to sensible defaults.
 ///
 /// Use the static [show] helper to display it. The widget keeps track of an

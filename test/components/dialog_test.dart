@@ -254,6 +254,86 @@ void main() {
       });
     });
   });
+
+  group('DraftModeUIShowDialog', () {
+    const buttonKey = Key('DraftModeUIShowDialog-launch');
+
+    testWidgets('shows Material dialog and returns selection', (tester) async {
+      await _withTargetPlatform(TargetPlatform.android, () async {
+        final result = ValueNotifier<bool?>(null);
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: Builder(
+                builder: (context) => ElevatedButton(
+                  key: buttonKey,
+                  onPressed: () async {
+                    result.value = await DraftModeUIShowDialog().show(
+                      context: context,
+                      title: 'Confirm',
+                      message: 'Proceed?',
+                      barrierDismissible: true,
+                    );
+                  },
+                  child: const Text('Launch showDialog'),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        await tester.tap(find.byKey(buttonKey));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(AlertDialog), findsOneWidget);
+
+        await tester.tap(find.text('Yes'));
+        await tester.pumpAndSettle();
+
+        expect(result.value, isTrue);
+      });
+    });
+
+    testWidgets('shows Cupertino dialog variant when on iOS', (tester) async {
+      await _withTargetPlatform(TargetPlatform.iOS, () async {
+        final result = ValueNotifier<bool?>(null);
+
+        await tester.pumpWidget(
+          CupertinoApp(
+            home: CupertinoPageScaffold(
+              navigationBar: const CupertinoNavigationBar(),
+              child: Center(
+                child: Builder(
+                  builder: (context) => CupertinoButton(
+                    key: buttonKey,
+                    onPressed: () async {
+                      result.value = await DraftModeUIShowDialog().show(
+                        context: context,
+                        title: 'Confirm',
+                        message: 'Proceed?',
+                      );
+                    },
+                    child: const Text('Launch showDialog'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        await tester.tap(find.byKey(buttonKey));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(CupertinoAlertDialog), findsOneWidget);
+
+        await tester.tap(find.text('No'));
+        await tester.pumpAndSettle();
+
+        expect(result.value, isFalse);
+      });
+    });
+  });
 }
 
 Future<void> _withTargetPlatform(
