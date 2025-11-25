@@ -87,9 +87,10 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
           : DraftModeUIRow(emptyPlaceholder!);
       content = _wrapWithPlaceholder(context, placeholder);
     } else {
+      final paddingOverride = padding ?? EdgeInsets.zero;
       final listView = ListView.separated(
         shrinkWrap: true,
-        padding: padding,
+        padding: paddingOverride,
         itemBuilder: (context, index) => _buildListItem(context, items[index]),
         separatorBuilder: (context, index) => _buildSeparatorWidget(),
         itemCount: items.length,
@@ -162,10 +163,8 @@ class DraftModeUIList<ItemType> extends StatelessWidget {
 
     Widget sliver = SliverList(delegate: list.childrenDelegate);
 
-    final EdgeInsetsGeometry? padding = list.padding;
-    if (padding != null) {
-      sliver = SliverPadding(padding: padding, sliver: sliver);
-    }
+    final EdgeInsetsGeometry padding = list.padding ?? EdgeInsets.zero;
+    sliver = SliverPadding(padding: padding, sliver: sliver);
 
     return CustomScrollView(
       scrollDirection: list.scrollDirection,

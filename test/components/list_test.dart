@@ -122,6 +122,24 @@ void main() {
     expect(find.byType(ListView), findsOneWidget);
   });
 
+  testWidgets('defaults ListView padding to zero when not provided',
+      (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        DraftModeUIList<DraftModeListItem>(
+          items: const [
+            DraftModeListItem(id: 1, value: 'Only'),
+            DraftModeListItem(id: 2, value: 'Second'),
+          ],
+          itemBuilder: (item, _) => Text(item.value as String),
+        ),
+      ),
+    );
+
+    final ListView listView = tester.widget(find.byType(ListView));
+    expect(listView.padding, EdgeInsets.zero);
+  });
+
   testWidgets('renders header when separator parameter omitted',
       (tester) async {
     await tester.pumpWidget(

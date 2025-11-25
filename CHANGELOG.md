@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 1.0.2+1
+- Extended `DraftModeUIPageExample` with navigation/bottom bar overrides plus
+  refreshed documentation and tests to cover the new configuration surface.
+- Normalized `DraftModeUIList` default padding to `EdgeInsets.zero` and added
+  dialog coverage for `DraftModeUIShowDialog` to hold the suite at 100%.
 
 ## 1.0.1+1
 - Added `DraftModeUIList` default separators that mirror Cupertino inset-grouped
