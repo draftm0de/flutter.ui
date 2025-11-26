@@ -5,3 +5,4 @@ export 'components/section.dart';
 export 'components/spinner.dart';
 export 'components/button.dart';
 export 'components/drop_down.dart';
+export 'components/switch.dart';

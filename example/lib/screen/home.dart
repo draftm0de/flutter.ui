@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final List<DraftModeListItem> _items;
   DraftModeListItem? _selectedItem;
+  bool _switch = false;
 
   @override
   void initState() {
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final Map<int, String> map = {1: 'Hallo', 2: 'Welt', 3: 'Example'};
     _items = DraftModeListItemBuilder.fromMap(map);
     _selectedItem = _items.first;
+    _switch = false;
   }
 
   Future<void> _showDialog(BuildContext context) async {
@@ -39,13 +41,23 @@ class _HomeScreenState extends State<HomeScreen> {
             Text('Save to DraftMode'),
             label: 'Destination',
           ),
+          DraftModeUIRow(
+            DraftModeUISwitch(
+              value: _switch,
+              onChanged: (value) {
+                setState(() {
+                  _switch = value;
+                });
+              },
+            ),
+            label: 'Switcher',
+          )
         ],
       ),
       DraftModeUISection(
-        header: 'Basic Section (custom label width)',
-        labelWidth: 120,
+        header: 'Basic Section (label width: 90)',
+        labelWidth: 90,
         children: [
-          DraftModeUIRow(const Text('Auto')),
           DraftModeUIRow(
             Text('19.04.2024'),
             label: 'Created',
@@ -54,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       DraftModeUISection(header: 'List', children: [
         DraftModeUIList(
+          isPending: (_items.isEmpty),
           items: _items,
           selectedItem: _selectedItem,
           itemBuilder: (item, isSelected) => Text(item.value.toString()),
@@ -62,16 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ]),
       DraftModeUISection(header: 'DropDown', children: [
         DraftModeUIDropDown(
+          isPending: (_items.isEmpty),
           pageTitle: 'DropDown Page',
           items: _items,
           selectedItem: _selectedItem,
           emptyPlaceholder: const Text('Tap to pick an item'),
-          itemBuilder: (item, isSelected) => DefaultTextStyle.merge(
-            style: TextStyle(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-            child: Text(item.value.toString()),
-          ),
+          itemBuilder: (item, isSelected) => Text(item.value.toString()),
           onChanged: (item) => setState(() => _selectedItem = item),
         ),
       ]),

@@ -1,5 +1,12 @@
 # Changelog
 
+## Next
+- Added the adaptive `DraftModeUISwitch` platform control plus exhaustive tests
+  to lock down the Cupertino/Material render paths and default value behavior.
+- Documented the new widget in the README and showcased it on the example
+  screen so host apps can mirror the native toggle affordance without branching
+  per platform.
+
 ## 1.0.6+1
 - Added the `DraftModeUIButton.text` factory to render buttons backed by DraftMode
   text sizing/tint tokens without manually constructing a `Text` widget.
