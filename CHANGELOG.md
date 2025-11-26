@@ -1,12 +1,19 @@
 # Changelog
 
-## 1.0.2+1
+## 1.0.6+1
+- Added the `DraftModeUIButton.text` factory to render buttons backed by DraftMode
+  text sizing/tint tokens without manually constructing a `Text` widget.
+- Introduced `DraftModeUIDropDown`, documented the API, and updated the example
+  screen/tests to showcase the full-screen picker flow that reuses
+  `DraftModeUIList` hooks.
+
+## 1.0.5+1
 - Extended `DraftModeUIPageExample` with navigation/bottom bar overrides plus
   refreshed documentation and tests to cover the new configuration surface.
 - Normalized `DraftModeUIList` default padding to `EdgeInsets.zero` and added
   dialog coverage for `DraftModeUIShowDialog` to hold the suite at 100%.
 
-## 1.0.1+1
+## 1.0.4+1
 - Added `DraftModeUIList` default separators that mirror Cupertino inset-grouped
   dividers when no custom separator is provided, updated inline docs/README, and
   expanded tests/coverage to keep the behavior locked in.

@@ -295,10 +295,33 @@ bottom bars. It automatically switches between `CupertinoButton` and
 `DraftModePageNavigationBottomItem` wrappers pre-configure sizing for their
 respective bars so you only need to provide icons/text.
 
+## Drop-down picker
+
+`DraftModeUIDropDown` renders the current selection inline and pushes a
+`DraftModeUIPage` with the same `DraftModeUIList` styling hooks when users need
+to change the value:
+
+```dart
+DraftModeUIDropDown(
+  pageTitle: 'Destination',
+  items: items,
+  selectedItem: selected,
+  emptyPlaceholder: const Text('Tap to pick an item'),
+  itemBuilder: (item, isSelected) => Text(item.value as String),
+  onChanged: (item) => setState(() => selected = item),
+)
+```
+
+Headers, separators, refresh controls, and custom padding propagate to the
+sheet so drop-downs match standalone lists.
+
 ## Platform buttons & styles
 
 - `DraftModeUIButton` exposes platform-specific `IconData` for standard actions
   (back, save, logout, etc.) so downstream widgets stay idiomatic.
+- `DraftModeUIButton.text('Save', onPressed: ...)` renders a platform-aware
+  button with pre-configured text styling so you do not need to pass your own
+  `Text` widget.
 - `DraftModeUIPlatform.isIOS` mirrors Flutter's `defaultTargetPlatform` to keep
   conditional code consistent across widgets.
 - `DraftModeUIStylePadding`, `DraftModeUIStyleNavigationBar`,
