@@ -3,8 +3,8 @@
 Reusable Flutter widgets shared across DraftMode apps. The package currently
 ships the platform-aware `DraftModeUIDialog`, grouped form building blocks
 (`DraftModeUIRow`, `DraftModeUISection`, and `DraftModeUIList`), the page
-scaffolding family, and a `DraftModeUIPageExample` demo scaffold that showcases
-the bundled assets.
+scaffolding family, the adaptive `DraftModeUISwitch`, and a `DraftModeUIPageExample`
+demo scaffold that showcases the bundled assets.
 
 ### Library entrypoints
 
@@ -165,6 +165,24 @@ DraftModeUISection(
 
 Set `transparent: true` to reuse grouped spacing without painting the default
 Cupertino background.
+
+## DraftModeUISwitch
+
+`DraftModeUISwitch` mirrors the native toggle control for the active platform
+so behavior (motion curves, haptics, accessibility semantics) stays familiar
+without branching in host apps. On iOS the widget renders a `CupertinoSwitch`
+directly; elsewhere it delegates to `Switch.adaptive` so Material themes and
+dynamic color schemes flow through automatically.
+
+```dart
+DraftModeUISwitch(
+  value: settings.useMobileData,
+  onChanged: controller.toggleMobileData,
+);
+```
+
+Omit `value` to default to `false` and either pass `onChanged` to make the
+control interactive or leave it null to show the disabled treatment.
 
 ## DraftModeUIList
 
