@@ -1,7 +1,7 @@
 name: draftmode_ui
 description: Handle Dialogs with autoConfirm.
 publish_to: "none"
-version: 1.0.6+1
+version: 1.0.7+1
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
