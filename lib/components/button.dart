@@ -23,6 +23,48 @@ class DraftModeUIButton extends StatelessWidget {
     this.stretched = true,
   });
 
+  /// Creates a button that renders the provided [text] with DraftMode sizing
+  /// tokens. Callers can override the generated [Text] styling via
+  /// [textStyle], [textAlign], [maxLines], or [overflow].
+  factory DraftModeUIButton.text(
+    String text, {
+    Key? key,
+    Widget? pendingChild,
+    bool isPending = false,
+    VoidCallback? onPressed,
+    DraftModeUIStyleButtonSize? styleSize,
+    DraftModeUIStyleButtonColor? styleColor,
+    bool stretched = true,
+    TextStyle? textStyle,
+    TextAlign? textAlign,
+    int? maxLines,
+    TextOverflow? overflow,
+  }) {
+    final resolvedSize = styleSize ?? DraftModeUIStyleButtonSizes.large;
+    final resolvedColor = styleColor ?? DraftModeUIStyleButtonColors.submit;
+    return DraftModeUIButton(
+      key: key,
+      pendingChild: pendingChild,
+      isPending: isPending,
+      onPressed: onPressed,
+      styleSize: styleSize,
+      styleColor: styleColor,
+      stretched: stretched,
+      child: Text(
+        text,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        overflow: overflow,
+        style: textStyle ??
+            TextStyle(
+              fontSize: resolvedSize.fontSize,
+              fontWeight: resolvedSize.fontWeight,
+              color: resolvedColor.font,
+            ),
+      ),
+    );
+  }
+
   CupertinoButtonSize _resolveCupertinoSize() {
     if (styleSize == DraftModeUIStyleButtonSizes.medium) {
       return CupertinoButtonSize.medium;

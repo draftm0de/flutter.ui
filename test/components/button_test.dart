@@ -102,6 +102,30 @@ void main() {
       expect(button.onPressed, isNull);
     });
   });
+
+  testWidgets('text factory wires styles to the generated Text widget', (
+    tester,
+  ) async {
+    await _withTargetPlatform(TargetPlatform.android, () async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: DraftModeUIButton.text(
+              'Factory label',
+              styleSize: DraftModeUIStyleButtonSizes.small,
+              styleColor: DraftModeUIStyleButtonColors.inline,
+            ),
+          ),
+        ),
+      );
+
+      final text = tester.widget<Text>(find.text('Factory label'));
+      expect(text.style?.fontSize, DraftModeUIStyleButtonSizes.small.fontSize);
+      expect(
+          text.style?.fontWeight, DraftModeUIStyleButtonSizes.small.fontWeight);
+      expect(text.style?.color, DraftModeUIStyleButtonColors.inline.font);
+    });
+  });
 }
 
 Future<void> _withTargetPlatform(

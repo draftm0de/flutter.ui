@@ -1,10 +1,25 @@
 import 'package:draftmode_ui/components.dart';
 import 'package:draftmode_ui/pages.dart';
-import 'package:draftmode_ui/styles.dart';
 import 'package:flutter/widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final List<DraftModeListItem> _items;
+  DraftModeListItem? _selectedItem;
+
+  @override
+  void initState() {
+    super.initState();
+    final Map<int, String> map = {1: 'Hallo', 2: 'Welt', 3: 'Example'};
+    _items = DraftModeListItemBuilder.fromMap(map);
+    _selectedItem = _items.first;
+  }
 
   Future<void> _showDialog(BuildContext context) async {
     await DraftModeUIDialog.show(
@@ -15,11 +30,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<int, String> map = {1: "Hallo", 2: "Welt", 4: "Example"};
-    final items = DraftModeListItemBuilder.fromMap(map);
-    final selectedItem = DraftModeListItem(id: 3, value: "UIList");
-    items.add(selectedItem);
-
     final List<Widget> children = [
       DraftModeUISection(
         header: 'Basic Section',
@@ -31,7 +41,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      const SizedBox(height: 24),
       DraftModeUISection(
         header: 'Basic Section (custom label width)',
         labelWidth: 120,
@@ -43,25 +52,34 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      DraftModeUISection(header: 'List View', children: [
+      DraftModeUISection(header: 'List', children: [
         DraftModeUIList(
-          items: items,
-          selectedItem: selectedItem,
-          itemBuilder: (item, isSelected) {
-            return Text(item.value);
-          },
-          onTap: (item) {
-            debugPrint("pressedOnTab#${item.id}");
-          },
-        )
+          items: _items,
+          selectedItem: _selectedItem,
+          itemBuilder: (item, isSelected) => Text(item.value.toString()),
+          onTap: (item) => setState(() => _selectedItem = item),
+        ),
+      ]),
+      DraftModeUISection(header: 'DropDown', children: [
+        DraftModeUIDropDown(
+          pageTitle: 'DropDown Page',
+          items: _items,
+          selectedItem: _selectedItem,
+          emptyPlaceholder: const Text('Tap to pick an item'),
+          itemBuilder: (item, isSelected) => DefaultTextStyle.merge(
+            style: TextStyle(
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+            child: Text(item.value.toString()),
+          ),
+          onChanged: (item) => setState(() => _selectedItem = item),
+        ),
       ]),
       DraftModeUISection(header: 'Buttons', children: [
-        DraftModeUIButton(
+        DraftModeUIButton.text(
+          'openDialog',
           onPressed: () => _showDialog(context),
-          child: Text('openDialog',
-              style:
-                  TextStyle(color: DraftModeUIStyleButtonColors.submit.font)),
-        )
+        ),
       ]),
     ];
 
