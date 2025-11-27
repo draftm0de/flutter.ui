@@ -103,6 +103,28 @@ void main() {
     });
   });
 
+  testWidgets('text factory falls back to submit styling when unset', (
+    tester,
+  ) async {
+    await _withTargetPlatform(TargetPlatform.android, () async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: DraftModeUIButton.text('Defaults'),
+          ),
+        ),
+      );
+
+      final text = tester.widget<Text>(find.text('Defaults'));
+      expect(text.style?.fontSize, DraftModeUIStyleButtonSizes.large.fontSize);
+      expect(
+        text.style?.fontWeight,
+        DraftModeUIStyleButtonSizes.large.fontWeight,
+      );
+      expect(text.style?.color, DraftModeUIStyleButtonColors.submit.font);
+    });
+  });
+
   testWidgets('text factory wires styles to the generated Text widget', (
     tester,
   ) async {

@@ -127,7 +127,9 @@ DraftMode surfaces. When a `label` is provided the widget renders a
 `DraftModeUIStyles.labelWidth`-wide leading column (or the width inherited from
 `DraftModeUISection`) with `DraftModeUIStyleText` typography before expanding
 the trailing child. Padding defaults to the shared `DraftModeUIStylePadding`
-tokens so adjacent rows visually align with the rest of the library.
+tokens so adjacent rows visually align with the rest of the library. Provide
+`expanded` to append a trailing widget (badges, toggles, inline buttons) while
+preserving the core content width.
 
 ```dart
 import 'package:draftmode_ui/components.dart';
@@ -136,6 +138,11 @@ DraftModeUIRow(
   CupertinoTextField(placeholder: 'Email'),
   label: 'Email',
   backgroundColor: CupertinoColors.secondarySystemGroupedBackground,
+  expanded: CupertinoButton.filled(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    onPressed: sendInvite,
+    child: const Text('Invite'),
+  ),
 );
 ```
 

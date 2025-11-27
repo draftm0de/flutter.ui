@@ -149,6 +149,59 @@ void main() {
       );
     });
   });
+
+  testWidgets('drop-down pushes Material route when not on iOS',
+      (tester) async {
+    await _withPlatform(TargetPlatform.android, () async {
+      final observer = _RecordingNavigatorObserver();
+      await tester.pumpWidget(
+        MaterialApp(
+          navigatorObservers: [observer],
+          home: DraftModeUIDropDown<int>(
+            pageTitle: 'Route test',
+            items: const [1, 2],
+            selectedItem: 1,
+            itemBuilder: (item, _) => Text('Item $item'),
+          ),
+        ),
+      );
+
+      observer.reset();
+      await tester.tap(find.text('Item 1'));
+      await tester.pumpAndSettle();
+
+      expect(observer.latestRoute, isA<MaterialPageRoute<dynamic>>());
+
+      observer.latestRoute?.navigator?.pop();
+      await tester.pumpAndSettle();
+    });
+  });
+
+  testWidgets('drop-down pushes Cupertino route on iOS', (tester) async {
+    await _withPlatform(TargetPlatform.iOS, () async {
+      final observer = _RecordingNavigatorObserver();
+      await tester.pumpWidget(
+        CupertinoApp(
+          navigatorObservers: [observer],
+          home: DraftModeUIDropDown<int>(
+            pageTitle: 'Route test',
+            items: const [1, 2],
+            selectedItem: 1,
+            itemBuilder: (item, _) => Text('Cupertino $item'),
+          ),
+        ),
+      );
+
+      observer.reset();
+      await tester.tap(find.text('Cupertino 1'));
+      await tester.pumpAndSettle();
+
+      expect(observer.latestRoute, isA<CupertinoPageRoute<dynamic>>());
+
+      observer.latestRoute?.navigator?.pop();
+      await tester.pumpAndSettle();
+    });
+  });
 }
 
 Future<void> _withPlatform(
@@ -162,4 +215,16 @@ Future<void> _withPlatform(
   } finally {
     debugDefaultTargetPlatformOverride = previous;
   }
+}
+
+class _RecordingNavigatorObserver extends NavigatorObserver {
+  Route<dynamic>? latestRoute;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    latestRoute = route;
+    super.didPush(route, previousRoute);
+  }
+
+  void reset() => latestRoute = null;
 }

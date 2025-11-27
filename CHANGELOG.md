@@ -1,6 +1,15 @@
 # Changelog
 
-## Next
+## 1.0.8+1
+- Added an `expanded` slot to `DraftModeUIRow` so trailing badges/buttons render
+  beside the primary content without manual padding tweaks. Updated inline docs,
+  README guidance, the home example, and new widget tests to lock in the
+  behavior while keeping suite coverage at 100%.
+- Exercised the default styling branch of `DraftModeUIButton.text` and both the
+  Cupertino/Material navigation paths inside `DraftModeUIDropDown` so coverage
+  stays perfect across the factory helpers and picker routing logic.
+
+## 1.0.7+1
 - Added the adaptive `DraftModeUISwitch` platform control plus exhaustive tests
   to lock down the Cupertino/Material render paths and default value behavior.
 - Documented the new widget in the README and showcased it on the example
