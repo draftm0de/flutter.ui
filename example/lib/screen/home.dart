@@ -39,7 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
           DraftModeUIRow(const Text('Untitled note')),
           DraftModeUIRow(
             Text('Save to DraftMode'),
-            label: 'Destination',
+            label: 'Label',
+            expanded: Text('sec'),
           ),
           DraftModeUIRow(
             DraftModeUISwitch(

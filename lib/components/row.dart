@@ -10,7 +10,9 @@ import 'section.dart';
 /// with native grouped lists and the label inherits [DraftModeUIStyleText].
 /// Use [alignment] to fine-tune how [child] should sit within the content area
 /// and provide custom [padding], [backgroundColor], or [height] overrides to
-/// blend with bespoke grouped list treatments.
+/// blend with bespoke grouped list treatments. Provide [expanded] to append a
+/// trailing widget (badges, toggles, inline buttons) offset with the shared
+/// tertiary padding token.
 class DraftModeUIRow extends StatelessWidget {
   final Widget child;
   final String? label;
@@ -18,6 +20,11 @@ class DraftModeUIRow extends StatelessWidget {
   final EdgeInsets? padding;
   final double? height;
   final Color? backgroundColor;
+
+  /// Optional trailing widget displayed after the main [child]. Useful for
+  /// status badges or quick actions that shouldn't consume the core content
+  /// width.
+  final Widget? expanded;
 
   const DraftModeUIRow(
     this.child, {
@@ -27,30 +34,46 @@ class DraftModeUIRow extends StatelessWidget {
     this.padding,
     this.backgroundColor,
     this.height,
+    this.expanded,
   });
 
   @override
   Widget build(BuildContext context) {
     final bool hasLabel = label?.trim().isNotEmpty ?? false;
+    final bool hasExpanded = expanded != null;
     final Widget content = Align(alignment: alignment, child: child);
 
     final double effectiveLabelWidth =
         DraftModeUISectionScope.getLabelWidth(context) ??
             DraftModeUIStyles.labelWidth;
 
-    final Widget body = hasLabel
-        ? Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: effectiveLabelWidth,
-                child: Text(label!, style: DraftModeUIStyleText.primary),
-              ),
-              Expanded(child: content),
-            ],
-          )
-        : content;
+    final List<Widget> children = [];
+    if (hasLabel) {
+      children.add(SizedBox(
+        width: effectiveLabelWidth,
+        child: Text(label!, style: DraftModeUIStyleText.primary),
+      ));
+    }
+    children.add(Expanded(child: content));
+    if (hasExpanded) {
+      children.add(
+        Padding(
+          padding: EdgeInsets.only(left: DraftModeUIStylePadding.tertiary),
+          child: expanded,
+        ),
+      );
+    }
+
+    Widget body;
+    if (children.length > 1) {
+      body = Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: children.toList(),
+      );
+    } else {
+      body = content;
+    }
 
     final EdgeInsets containerPadding = padding ??
         EdgeInsets.symmetric(

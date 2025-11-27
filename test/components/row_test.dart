@@ -35,6 +35,32 @@ void main() {
     expect(labelText.style?.color, DraftModeUIStyleColor.primary.text);
   });
 
+  testWidgets('appends expanded widget with shared spacing', (tester) async {
+    final expandedKey = UniqueKey();
+
+    await tester.pumpWidget(
+      wrap(
+        DraftModeUIRow(
+          const Text('Value'),
+          label: 'Email',
+          expanded: Icon(CupertinoIcons.check_mark, key: expandedKey),
+        ),
+      ),
+    );
+
+    final Finder rowFinder =
+        find.ancestor(of: find.text('Value'), matching: find.byType(Row));
+    final Row row = tester.widget<Row>(rowFinder.first);
+    final Finder expandedFinder = find.byKey(expandedKey);
+    final Finder paddedExpanded =
+        find.ancestor(of: expandedFinder, matching: find.byType(Padding));
+    final Padding padding = tester.widget<Padding>(paddedExpanded.first);
+    final EdgeInsets resolvedPadding = padding.padding as EdgeInsets;
+
+    expect(row.children.length, 3);
+    expect(resolvedPadding.left, DraftModeUIStylePadding.tertiary);
+  });
+
   testWidgets('omits label layout when label is blank', (tester) async {
     await tester.pumpWidget(
       wrap(
@@ -47,6 +73,21 @@ void main() {
 
     expect(find.byType(Row), findsNothing);
     expect(find.text('Value'), findsOneWidget);
+  });
+
+  testWidgets('still renders expanded widget when label missing',
+      (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        DraftModeUIRow(
+          const Text('Value'),
+          expanded: CupertinoSwitch(value: false, onChanged: (_) {}),
+        ),
+      ),
+    );
+
+    expect(find.byType(Row), findsOneWidget);
+    expect(find.byType(CupertinoSwitch), findsOneWidget);
   });
 
   testWidgets('wraps content in container when overrides provided',

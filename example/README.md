@@ -15,4 +15,6 @@ flutter run
 
 `main.dart` overrides `DraftModeUIStyles.labelWidth` to demonstrate the global
 configuration path while `HomeScreen` shows multiple `DraftModeUISection`
-instances with different header + label combinations.
+instances with different header + label combinations. The sample rows also show
+the new `DraftModeUIRow.expanded` slot so trailing actions/badges align with the
+shared spacing tokens without custom padding.
