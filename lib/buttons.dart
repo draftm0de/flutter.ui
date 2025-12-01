@@ -73,4 +73,8 @@ class DraftModeUIButtons {
 
   static IconData get trash =>
       DraftModeUIPlatform.isIOS ? CupertinoIcons.delete : Icons.delete;
+
+  static IconData get listBullet => DraftModeUIPlatform.isIOS
+      ? CupertinoIcons.list_bullet
+      : Icons.format_list_bulleted;
 }

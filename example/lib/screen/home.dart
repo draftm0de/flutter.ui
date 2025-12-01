@@ -1,3 +1,4 @@
+import 'package:draftmode_ui/buttons.dart';
 import 'package:draftmode_ui/components.dart';
 import 'package:draftmode_ui/pages.dart';
 import 'package:flutter/widgets.dart';
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    final Map<int, String> map = {1: 'Hallo', 2: 'Welt', 3: 'Example'};
+    final Map<int, String> map = {1: 'Hallo', 2: 'Welt'};
     _items = DraftModeListItemBuilder.fromMap(map);
     _selectedItem = _items.first;
     _switch = false;
@@ -93,6 +94,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ]),
     ];
 
-    return DraftModeUIPageExample(title: 'DraftMode UI', children: children);
+    return DraftModeUIPageExample(
+      title: 'DraftMode UI',
+      bottomTrailing: [
+        DraftModePageNavigationBottomItem(
+          icon: DraftModeUIButtons.settings,
+          badge: DraftModeUIBadge.formatCountOrNull(2),
+        )
+      ],
+      children: children,
+    );
   }
 }

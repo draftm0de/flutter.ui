@@ -10,6 +10,7 @@ class DraftModePageNavigationBottomItem extends StatelessWidget {
   final double? iconHeight;
   final Color? iconColor;
   final bool iconExpanded;
+  final String? badge;
   final Future<void> Function()? onTap;
   final Widget? loadWidget;
 
@@ -20,6 +21,7 @@ class DraftModePageNavigationBottomItem extends StatelessWidget {
     this.iconColor,
     this.iconHeight,
     this.iconExpanded = false,
+    this.badge,
     this.onTap,
     this.loadWidget,
   });
@@ -34,6 +36,7 @@ class DraftModePageNavigationBottomItem extends StatelessWidget {
       iconSize: useIconHeight,
       iconExpanded: iconExpanded,
       iconColor: iconColor,
+      badge: badge,
       onTap: onTap,
       loadWidget: loadWidget,
     );

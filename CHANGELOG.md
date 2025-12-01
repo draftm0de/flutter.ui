@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.9+1
+- Added the reusable `DraftModeUIBadge` + `DraftModeUIBadged` components and
+  switched navigation items to a single `badge` string so toolbars can surface
+  custom labels or formatted counts without duplicating overlay logic.
+- Documented the new API in the README/example app, updated widget tests, and
+  added unit coverage for `DraftModeUIBadge.formatCountOrNull` to keep coverage
+  at 100%.
+- Introduced the lightweight `DraftModeFormatterDateTime.duration` helper (with
+  README docs, validation, and tests) so apps can format `Duration` values
+  without pulling in `intl` while keeping coverage perfect.
+
 ## 1.0.8+1
 - Added an `expanded` slot to `DraftModeUIRow` so trailing badges/buttons render
   beside the primary content without manual padding tweaks. Updated inline docs,

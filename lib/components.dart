@@ -6,3 +6,4 @@ export 'components/spinner.dart';
 export 'components/button.dart';
 export 'components/drop_down.dart';
 export 'components/switch.dart';
+export 'components/badge.dart';
