@@ -248,7 +248,10 @@ DraftModeUIPage(
   ],
   bottomCenter: const DraftModePageNavigationBottomItem(icon: CupertinoIcons.play_arrow_solid),
   bottomTrailing: const [
-    DraftModePageNavigationBottomItem(icon: CupertinoIcons.search),
+    DraftModePageNavigationBottomItem(
+      icon: CupertinoIcons.search,
+      badge: '3',
+    ),
   ],
   body: const Text('Primary content goes here'),
 );
@@ -316,9 +319,37 @@ sections.
 `DraftModePageNavigationItem` is a shared button component used by the top and
 bottom bars. It automatically switches between `CupertinoButton` and
 `TextButton`, and it can either call a callback (`onTap`) or push a new route
-(`loadWidget`). The `DraftModePageNavigationTopItem` and
+(`loadWidget`). Provide `badge` to surface a text/number badge in the
+top-right corner (use `DraftModeUIBadge.formatCountOrNull(count)` if you want
+automatic inbox-style capping). The `DraftModePageNavigationTopItem` and
 `DraftModePageNavigationBottomItem` wrappers pre-configure sizing for their
 respective bars so you only need to provide icons/text.
+
+## Duration formatter
+
+Import `package:draftmode_ui/formatter.dart` to access the lightweight
+`DraftModeFormatterDateTime.duration` helper when you need to render `Duration`
+values without pulling in `intl`:
+
+```dart
+import 'package:draftmode_ui/formatter.dart';
+
+final eta = DraftModeFormatterDateTime.duration(
+  const Duration(days: 2, hours: 4, minutes: 7, seconds: 9),
+  pattern: 'ETA DD days HH:mm:ss',
+);
+// -> ETA 02 days 04:07:09
+```
+
+Supported tokens:
+- `DD`: total days (zero padded to at least two digits)
+- `HH`: hours remainder after days
+- `mm`: minutes remainder after hours
+- `ss`: seconds remainder after minutes
+
+Any other characters remain untouched, so literal text and punctuation render as
+written. Passing an empty `pattern` or a negative `Duration` throws an
+`ArgumentError` to surface invalid input quickly.
 
 ## Drop-down picker
 

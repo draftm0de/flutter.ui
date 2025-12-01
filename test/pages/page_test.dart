@@ -191,5 +191,47 @@ void main() {
         debugDefaultTargetPlatformOverride = null;
       }
     });
+
+    testWidgets('shows a badge when badge set', (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      try {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: DraftModeUIPage(
+              body: SizedBox.shrink(),
+              bottomCenter: DraftModePageNavigationBottomItem(
+                icon: Icons.mail_outline,
+                badge: '7',
+              ),
+            ),
+          ),
+        );
+
+        expect(find.text('7'), findsOneWidget);
+      } finally {
+        debugDefaultTargetPlatformOverride = null;
+      }
+    });
+
+    testWidgets('renders custom badge strings', (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      try {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: DraftModeUIPage(
+              body: SizedBox.shrink(),
+              bottomCenter: DraftModePageNavigationBottomItem(
+                icon: Icons.mail_outline,
+                badge: '99+',
+              ),
+            ),
+          ),
+        );
+
+        expect(find.text('99+'), findsOneWidget);
+      } finally {
+        debugDefaultTargetPlatformOverride = null;
+      }
+    });
   });
 }

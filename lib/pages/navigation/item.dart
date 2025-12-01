@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:draftmode_ui/components/badge.dart';
 import 'package:draftmode_ui/platform.dart';
 
 /// Shared navigation button used by top and bottom bars.
@@ -11,6 +12,7 @@ class DraftModePageNavigationItem extends StatelessWidget {
   final Future<void> Function()? onTap;
   final Widget? loadWidget;
   final double? iconSize;
+  final String? badge;
 
   const DraftModePageNavigationItem({
     super.key,
@@ -19,6 +21,7 @@ class DraftModePageNavigationItem extends StatelessWidget {
     this.iconSize,
     this.iconExpanded = false,
     this.iconColor,
+    this.badge,
     this.onTap,
     this.loadWidget,
   });
@@ -64,18 +67,27 @@ class DraftModePageNavigationItem extends StatelessWidget {
       child = const SizedBox();
     }
 
+    final Widget display = (badge?.isNotEmpty == true)
+        ? DraftModeUIBadged(
+            badge: badge!,
+            topOffset: -6,
+            rightOffset: -8,
+            child: child,
+          )
+        : child;
+
     return DraftModeUIPlatform.isIOS
         ? CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: () => _onTap(context),
-            child: child,
+            child: display,
           )
         : TextButton(
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 10),
             ),
             onPressed: () => _onTap(context),
-            child: child,
+            child: display,
           );
   }
 }

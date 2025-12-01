@@ -30,6 +30,7 @@ void main() {
           DraftModeUIButtons.personCircle, CupertinoIcons.person_crop_circle);
       expect(DraftModeUIButtons.eye, CupertinoIcons.eye);
       expect(DraftModeUIButtons.eyeSlash, CupertinoIcons.eye_slash);
+      expect(DraftModeUIButtons.listBullet, CupertinoIcons.list_bullet);
       expect(DraftModeUIButtons.trash, CupertinoIcons.delete);
     } finally {
       debugDefaultTargetPlatformOverride = null;
@@ -58,6 +59,7 @@ void main() {
       expect(DraftModeUIButtons.personCircle, Icons.person);
       expect(DraftModeUIButtons.eye, Icons.visibility);
       expect(DraftModeUIButtons.eyeSlash, Icons.visibility_off);
+      expect(DraftModeUIButtons.listBullet, Icons.format_list_bulleted);
       expect(DraftModeUIButtons.trash, Icons.delete);
     } finally {
       debugDefaultTargetPlatformOverride = null;
